@@ -1,0 +1,103 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Dashboard | Alex Cloud Game</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;600;800&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="style.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+</head>
+<body class="bg-[#050505] text-white font-['Plus_Jakarta_Sans'] min-h-screen">
+
+    <!-- Auth Guard -->
+    <script>
+        if (localStorage.getItem('isLoggedIn') !== 'true') {
+            window.location.href = 'login.html';
+        }
+    </script>
+
+    <div class="flex">
+        <!-- Sidebar -->
+        <div class="w-64 border-r border-white/5 h-screen fixed hidden md:block bg-black">
+            <div class="p-8">
+                <h1 class="text-xl font-black">ALEX CLOUD</h1>
+            </div>
+            <nav class="px-4 space-y-2">
+                <a href="#" class="flex items-center gap-4 px-4 py-3 bg-white/10 rounded-xl text-white font-semibold">
+                    <i class="fas fa-home"></i> Home
+                </a>
+                <a href="#tutorial" class="flex items-center gap-4 px-4 py-3 text-gray-500 hover:bg-white/5 rounded-xl transition">
+                    <i class="fas fa-book"></i> Tutorial
+                </a>
+                <a href="#" onclick="logout()" class="flex items-center gap-4 px-4 py-3 text-red-500 hover:bg-red-500/5 rounded-xl transition mt-20">
+                    <i class="fas fa-sign-out-alt"></i> Logout
+                </a>
+            </nav>
+        </div>
+
+        <!-- Main Content -->
+        <main class="flex-1 md:ml-64 p-8">
+            <header class="flex justify-between items-center mb-12">
+                <div>
+                    <h2 class="text-3xl font-bold">Welcome Back, <span id="userDisplay" class="text-gray-400">Gamer</span>!</h2>
+                    <p class="text-gray-500">Status Akun: <span class="text-green-500 font-bold">Aktif (Premium)</span></p>
+                </div>
+                <div class="w-12 h-12 bg-white rounded-full flex items-center justify-center text-black font-bold">
+                    A
+                </div>
+            </header>
+
+            <!-- Quick Actions -->
+            <div class="grid grid-cols-1 md:grid-cols-2 gap-6 mb-12">
+                <div class="bg-white text-black p-8 rounded-[32px] flex flex-col justify-between">
+                    <h3 class="text-2xl font-bold mb-4">Siap Bermain?</h3>
+                    <p class="mb-8 opacity-80">Klik tombol di bawah untuk langsung menuju portal Amazon Luna dan mainkan FC 25.</p>
+                    <a href="https://luna.amazon.com" target="_blank" class="w-fit px-8 py-4 bg-black text-white rounded-2xl font-bold">Mulai Main Sekarang <i class="fas fa-external-link-alt ml-2"></i></a>
+                </div>
+                <div class="bg-white/5 border border-white/10 p-8 rounded-[32px]">
+                    <h3 class="text-2xl font-bold mb-4">Tutorial Singkat</h3>
+                    <ul class="space-y-3 text-gray-400 text-sm">
+                        <li>1. Buka Amazon Luna via Browser Chrome</li>
+                        <li>2. Masukkan akun yang diberikan admin</li>
+                        <li>3. Pilih game "FC 25"</li>
+                        <li>4. Hubungkan Controller atau gunakan Keyboard</li>
+                    </ul>
+                </div>
+            </div>
+
+            <!-- Tutorial Section -->
+            <section id="tutorial" class="bg-white/5 border border-white/10 rounded-[40px] p-10">
+                <h3 class="text-2xl font-bold mb-6 underline">Cara Setting & Save Progress</h3>
+                <div class="space-y-8">
+                    <div class="flex gap-6">
+                        <div class="text-3xl font-black opacity-20">01</div>
+                        <div>
+                            <h4 class="font-bold mb-2">Login Amazon Luna</h4>
+                            <p class="text-gray-500 leading-relaxed">Gunakan email dan password yang Anda beli dari WhatsApp kami. Pastikan tidak mengganti password agar garansi tidak hangus.</p>
+                        </div>
+                    </div>
+                    <div class="flex gap-6">
+                        <div class="text-3xl font-black opacity-20">02</div>
+                        <div>
+                            <h4 class="font-bold mb-2">Save Progress Game</h4>
+                            <p class="text-gray-500 leading-relaxed">Game seperti FC 25 akan otomatis menyimpan progress ke Cloud Amazon Luna. Anda bisa melanjutkan di device manapun (HP/PC) asalkan akunnya sama.</p>
+                        </div>
+                    </div>
+                </div>
+            </section>
+        </main>
+    </div>
+
+    <script>
+        // Display email from storage
+        document.getElementById('userDisplay').innerText = localStorage.getItem('userEmail') || 'User';
+
+        function logout() {
+            localStorage.clear();
+            window.location.href = 'login.html';
+        }
+    </script>
+</body>
+</html>
