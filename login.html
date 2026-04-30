@@ -1,0 +1,32 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Login - Alex Cloud Game</title>
+  <link rel="stylesheet" href="style.css">
+</head>
+<body style="display:flex; align-items:center; justify-content:center; min-height:100vh; background:#0a0a0a;">
+  <div class="login-card" style="background:rgba(255,255,255,0.05); padding:3rem; border-radius:20px; width:100%; max-width:420px; border:1px solid rgba(255,255,255,0.1);">
+    <h2 style="text-align:center; margin-bottom:2rem; color:#00ffcc;">Login Alex Cloud</h2>
+    <input type="email" id="email" placeholder="Email" style="width:100%; padding:14px; margin:10px 0; background:#111; border:none; border-radius:12px; color:#fff;">
+    <input type="password" id="password" placeholder="Password" style="width:100%; padding:14px; margin:10px 0; background:#111; border:none; border-radius:12px; color:#fff;">
+    <button onclick="login()" style="width:100%; padding:14px; background:#00ffcc; color:#000; border:none; border-radius:50px; font-weight:700; margin-top:1rem;">Login</button>
+    <p style="text-align:center; margin-top:1.5rem; font-size:0.9rem;">Belum punya akun? <a href="#" style="color:#00ffcc;">Hubungi Admin</a></p>
+  </div>
+
+  <script src="script.js"></script>
+  <script>
+    function login() {
+      const email = document.getElementById('email').value;
+      if (email) {
+        localStorage.setItem('isLoggedIn', 'true');
+        localStorage.setItem('userEmail', email);
+        window.location.href = 'dashboard.html';
+      } else {
+        alert('Masukkan email!');
+      }
+    }
+  </script>
+</body>
+</html>
