@@ -1,619 +1,229 @@
 <!DOCTYPE html>
 <html lang="id">
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Alex Cloud Game | Main Game Tanpa Download</title>
-    <!-- Google Fonts -->
-    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;600;700;800&family=Poppins:wght@400;600;700&display=swap" rel="stylesheet">
-    <!-- Lucide Icons -->
-    <script src="https://unpkg.com/lucide@latest"></script>
-    <!-- Tailwind CSS for Base Utilities -->
-    <script src="https://cdn.tailwindcss.com"></script>
-    <style>
-        :root {
-            --primary: #ffffff;
-            --accent: #6366f1;
-            --bg-dark: #050505;
-            --card-bg: rgba(255, 255, 255, 0.03);
-            --glass-border: rgba(255, 255, 255, 0.1);
-        }
-
-        * {
-            margin: 0;
-            padding: 0;
-            box-sizing: border-box;
-            scroll-behavior: smooth;
-        }
-
-        body {
-            font-family: 'Inter', sans-serif;
-            background-color: var(--bg-dark);
-            color: var(--primary);
-            overflow-x: hidden;
-        }
-
-        h1, h2, h3, .font-poppins {
-            font-family: 'Poppins', sans-serif;
-        }
-
-        /* Loading Screen */
-        #loader {
-            position: fixed;
-            inset: 0;
-            z-index: 9999;
-            background: #000;
-            display: flex;
-            flex-direction: column;
-            justify-content: center;
-            align-items: center;
-            transition: opacity 0.5s ease;
-        }
-
-        .spinner {
-            width: 50px;
-            height: 50px;
-            border: 3px solid rgba(99, 102, 241, 0.1);
-            border-top: 3px solid var(--accent);
-            border-radius: 50%;
-            animation: spin 1s linear infinite;
-        }
-
-        @keyframes spin { 100% { transform: rotate(360deg); } }
-
-        /* Glassmorphism */
-        .glass-card {
-            background: var(--card-bg);
-            backdrop-filter: blur(12px);
-            -webkit-backdrop-filter: blur(12px);
-            border: 1px solid var(--glass-border);
-            border-radius: 24px;
-            transition: all 0.3s ease;
-        }
-
-        .glass-card:hover {
-            border-color: var(--accent);
-            transform: translateY(-5px);
-            box-shadow: 0 10px 30px -10px rgba(99, 102, 241, 0.3);
-        }
-
-        /* Animations */
-        .reveal {
-            opacity: 0;
-            transform: translateY(30px);
-            transition: all 0.8s ease-out;
-        }
-
-        .reveal.active {
-            opacity: 1;
-            transform: translateY(0);
-        }
-
-        /* Custom Scrollbar */
-        ::-webkit-scrollbar { width: 8px; }
-        ::-webkit-scrollbar-track { background: #000; }
-        ::-webkit-scrollbar-thumb { background: #333; border-radius: 10px; }
-        ::-webkit-scrollbar-thumb:hover { background: var(--accent); }
-
-        /* Floating WA */
-        .wa-float {
-            position: fixed;
-            bottom: 30px;
-            right: 30px;
-            background: #25d366;
-            color: white;
-            width: 60px;
-            height: 60px;
-            border-radius: 50%;
-            display: flex;
-            justify-content: center;
-            align-items: center;
-            box-shadow: 0 4px 15px rgba(37, 211, 102, 0.3);
-            z-index: 100;
-            transition: transform 0.3s ease;
-        }
-
-        .wa-float:hover { transform: scale(1.1); }
-
-        /* Music Toggle */
-        .music-btn {
-            position: fixed;
-            bottom: 30px;
-            left: 30px;
-            background: rgba(255, 255, 255, 0.1);
-            backdrop-filter: blur(5px);
-            border: 1px solid var(--glass-border);
-            padding: 12px;
-            border-radius: 50%;
-            cursor: pointer;
-            z-index: 100;
-            color: white;
-        }
-
-        /* Page Transitions */
-        .page { display: none; }
-        .page.active { display: block; animation: fadeIn 0.5s ease forwards; }
-
-        @keyframes fadeIn {
-            from { opacity: 0; }
-            to { opacity: 1; }
-        }
-
-        .hero-gradient {
-            background: radial-gradient(circle at 50% -20%, #312e81 0%, #050505 60%);
-        }
-
-        .pricing-best {
-            background: linear-gradient(145deg, rgba(99, 102, 241, 0.1) 0%, rgba(0, 0, 0, 0) 100%);
-            border: 1px solid var(--accent) !important;
-        }
-    </style>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Alex Cloud Game - Cloud Gaming Premium</title>
+  <link rel="stylesheet" href="style.css">
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.6.0/css/all.min.css">
 </head>
 <body>
+  <!-- Loading Screen -->
+  <div id="loading" class="loading">
+    <div class="loader"></div>
+    <p>Memuat pengalaman gaming premium...</p>
+  </div>
 
-    <!-- Loading Screen -->
-    <div id="loader">
-        <div class="spinner"></div>
-        <p class="mt-4 font-poppins text-sm tracking-widest text-gray-400">LOADING ALEX CLOUD</p>
+  <!-- Navbar -->
+  <nav class="navbar">
+    <div class="nav-container">
+      <div class="logo">
+        <h2>Alex <span>Cloud</span></h2>
+      </div>
+      <div class="nav-links">
+        <a href="#games">Game</a>
+        <a href="#pricing">Harga</a>
+        <a href="#how">Cara Main</a>
+        <a href="login.html" class="btn-login">Login</a>
+      </div>
     </div>
+  </nav>
 
-    <!-- Music Player (Hidden) -->
-    <audio id="bgMusic" loop>
-        <source src="https://www.soundhelix.com/examples/mp3/SoundHelix-Song-1.mp3" type="audio/mpeg">
-    </audio>
+  <!-- Hero Section -->
+  <section class="hero">
+    <div class="hero-content">
+      <h1>Main Game Tanpa Download</h1>
+      <h2>Cloud Gaming Premium dengan Amazon Luna</h2>
+      <p>Nikmati FC 25, FC 26, dan ratusan game AAA lainnya langsung di HP atau PC tanpa install, tanpa storage besar.</p>
+      <div class="cta-buttons">
+        <a href="#pricing" class="btn-primary">Beli Sekarang</a>
+        <a href="#games" class="btn-secondary">Lihat Game</a>
+      </div>
+    </div>
+    <div class="hero-image">
+      <img src="https://picsum.photos/id/1015/1200/700" alt="Cloud Gaming">
+    </div>
+  </section>
 
-    <button class="music-btn" onclick="toggleMusic()" id="musicToggle">
-        <i data-lucide="volume-2"></i>
-    </button>
-
-    <!-- Floating WhatsApp -->
-    <a href="https://wa.me/628123456789?text=Halo%20admin,%20saya%20ingin%20membeli%20paket%20Cloud%20Gaming%20di%20Alex%20Cloud%20Game" target="_blank" class="wa-float">
-        <i data-lucide="message-circle"></i>
-    </a>
-
-    <!-- Navigation -->
-    <nav class="fixed top-0 w-full z-50 px-6 py-4 flex justify-between items-center backdrop-blur-md border-b border-white/5">
-        <div class="flex items-center gap-2 cursor-pointer" onclick="showPage('home')">
-            <div class="w-8 h-8 bg-indigo-600 rounded-lg flex items-center justify-center">
-                <i data-lucide="cloud" class="w-5 h-5 text-white"></i>
-            </div>
-            <span class="font-bold text-xl tracking-tighter">ALEX<span class="text-indigo-500">CLOUD</span></span>
+  <!-- Games Section -->
+  <section id="games" class="section">
+    <div class="container">
+      <h2 class="section-title">Game Tersedia</h2>
+      <div class="games-grid">
+        <div class="game-card">
+          <img src="https://picsum.photos/id/237/400/250" alt="EA FC 25">
+          <h3>EA SPORTS FC™ 25</h3>
+          <a href="https://wa.me/6281234567890?text=Halo%20admin,%20saya%20ingin%20mencoba%20demo%20FC%2025" class="btn-play">Main Sekarang</a>
         </div>
-        <div class="hidden md:flex gap-8 text-sm font-medium text-gray-400">
-            <a href="#games" class="hover:text-white transition-colors">Games</a>
-            <a href="#features" class="hover:text-white transition-colors">Fitur</a>
-            <a href="#pricing" class="hover:text-white transition-colors">Harga</a>
-            <a href="#faq" class="hover:text-white transition-colors">FAQ</a>
+        <div class="game-card">
+          <img src="https://picsum.photos/id/201/400/250" alt="EA FC 26">
+          <h3>EA SPORTS FC™ 26</h3>
+          <a href="https://wa.me/6281234567890?text=Halo%20admin,%20saya%20ingin%20mencoba%20demo%20FC%2026" class="btn-play">Main Sekarang</a>
         </div>
-        <div id="navAuth">
-            <!-- Dynamic Content via JS -->
+        <div class="game-card">
+          <img src="https://picsum.photos/id/180/400/250" alt="Other Games">
+          <h3>100+ Game Lainnya</h3>
+          <a href="https://wa.me/6281234567890?text=Halo%20admin,%20saya%20ingin%20tahu%20daftar%20game%20lengkap" class="btn-play">Lihat Semua</a>
         </div>
-    </nav>
+      </div>
+    </div>
+  </section>
 
-    <!-- MAIN PAGE -->
-    <main id="homePage" class="page active">
-        <!-- Hero Section -->
-        <section class="pt-32 pb-20 px-6 hero-gradient overflow-hidden">
-            <div class="max-w-6xl mx-auto text-center">
-                <div class="inline-block px-4 py-1 rounded-full bg-indigo-500/10 border border-indigo-500/20 text-indigo-400 text-xs font-semibold mb-6 reveal">
-                    🚀 #1 CLOUD GAMING PLATFORM DI INDONESIA
-                </div>
-                <h1 class="text-5xl md:text-7xl font-bold mb-6 leading-tight reveal">
-                    Main Game Tanpa <br> <span class="text-indigo-500">Download & Install</span>
-                </h1>
-                <p class="text-gray-400 text-lg md:text-xl max-w-2xl mx-auto mb-10 reveal">
-                    Nikmati pengalaman bermain game AAA seperti FC 25 & FC 26 di HP atau PC kentang sekalipun melalui teknologi Amazon Luna.
-                </p>
-                <div class="flex flex-col md:flex-row gap-4 justify-center reveal">
-                    <a href="#pricing" class="bg-white text-black px-8 py-4 rounded-xl font-bold hover:bg-gray-200 transition-all">Beli Sekarang</a>
-                    <a href="#games" class="bg-white/5 border border-white/10 px-8 py-4 rounded-xl font-bold hover:bg-white/10 transition-all">Lihat Library Game</a>
-                </div>
-            </div>
-        </section>
-
-        <!-- Library Games -->
-        <section id="games" class="py-24 px-6 max-w-7xl mx-auto">
-            <div class="flex justify-between items-end mb-12 reveal">
-                <div>
-                    <h2 class="text-3xl font-bold mb-2">Library Game Terbaru</h2>
-                    <p class="text-gray-400">Mainkan ratusan judul game populer dari Amazon Luna</p>
-                </div>
-                <div class="hidden md:block">
-                    <span class="text-indigo-500 text-sm font-semibold flex items-center gap-2">Update Mingguan <i data-lucide="arrow-right" class="w-4 h-4"></i></span>
-                </div>
-            </div>
-
-            <div class="grid grid-cols-2 md:grid-cols-4 gap-6 reveal">
-                <!-- Game Card 1 -->
-                <div class="glass-card overflow-hidden group">
-                    <div class="h-48 bg-gray-800 flex items-center justify-center relative overflow-hidden">
-                        <img src="https://images.unsplash.com/photo-1628157588553-5eeea00af15c?w=400&h=600&fit=crop" alt="FC 25" class="w-full h-full object-cover opacity-80 group-hover:scale-110 transition-transform duration-500">
-                        <div class="absolute inset-0 bg-black/40 group-hover:bg-black/20 transition-all"></div>
-                    </div>
-                    <div class="p-4">
-                        <h3 class="font-bold mb-1">EA Sports FC 25</h3>
-                        <p class="text-xs text-gray-500 mb-4">Sports • Simulation</p>
-                        <button onclick="window.location.href='#pricing'" class="w-full py-2 bg-indigo-600 rounded-lg text-xs font-semibold hover:bg-indigo-700 transition-all">MAIN SEKARANG</button>
-                    </div>
-                </div>
-                <!-- Game Card 2 -->
-                <div class="glass-card overflow-hidden group">
-                    <div class="h-48 bg-gray-800 flex items-center justify-center relative overflow-hidden">
-                        <img src="https://images.unsplash.com/photo-1542751371-adc38448a05e?w=400&h=600&fit=crop" alt="FC 26" class="w-full h-full object-cover opacity-80 group-hover:scale-110 transition-transform duration-500">
-                        <div class="absolute inset-0 bg-black/40 group-hover:bg-black/20 transition-all"></div>
-                    </div>
-                    <div class="p-4">
-                        <h3 class="font-bold mb-1">EA Sports FC 26</h3>
-                        <p class="text-xs text-gray-500 mb-4">Coming Soon • New</p>
-                        <button onclick="window.location.href='#pricing'" class="w-full py-2 bg-indigo-600 rounded-lg text-xs font-semibold hover:bg-indigo-700 transition-all">PRE-ORDER</button>
-                    </div>
-                </div>
-                <!-- Game Card 3 -->
-                <div class="glass-card overflow-hidden group">
-                    <div class="h-48 bg-gray-800 flex items-center justify-center relative overflow-hidden">
-                        <img src="https://images.unsplash.com/photo-1552824236-07764bd03932?w=400&h=600&fit=crop" alt="Action Game" class="w-full h-full object-cover opacity-80 group-hover:scale-110 transition-transform duration-500">
-                        <div class="absolute inset-0 bg-black/40 group-hover:bg-black/20 transition-all"></div>
-                    </div>
-                    <div class="p-4">
-                        <h3 class="font-bold mb-1">Adventure Quest</h3>
-                        <p class="text-xs text-gray-500 mb-4">Action • RPG</p>
-                        <button onclick="window.location.href='#pricing'" class="w-full py-2 bg-indigo-600 rounded-lg text-xs font-semibold hover:bg-indigo-700 transition-all">MAIN SEKARANG</button>
-                    </div>
-                </div>
-                <!-- Game Card 4 -->
-                <div class="glass-card overflow-hidden group">
-                    <div class="h-48 bg-gray-800 flex items-center justify-center relative overflow-hidden">
-                        <img src="https://images.unsplash.com/photo-1511512578047-dfb367046420?w=400&h=600&fit=crop" alt="Racing Game" class="w-full h-full object-cover opacity-80 group-hover:scale-110 transition-transform duration-500">
-                        <div class="absolute inset-0 bg-black/40 group-hover:bg-black/20 transition-all"></div>
-                    </div>
-                    <div class="p-4">
-                        <h3 class="font-bold mb-1">Cloud Racing</h3>
-                        <p class="text-xs text-gray-500 mb-4">Racing • Multiplayer</p>
-                        <button onclick="window.location.href='#pricing'" class="w-full py-2 bg-indigo-600 rounded-lg text-xs font-semibold hover:bg-indigo-700 transition-all">MAIN SEKARANG</button>
-                    </div>
-                </div>
-            </div>
-        </section>
-
-        <!-- Features -->
-        <section id="features" class="py-24 bg-white/5 px-6">
-            <div class="max-w-6xl mx-auto grid md:grid-cols-3 gap-12">
-                <div class="reveal">
-                    <div class="w-12 h-12 bg-indigo-600/20 rounded-2xl flex items-center justify-center mb-6">
-                        <i data-lucide="download-cloud" class="text-indigo-500"></i>
-                    </div>
-                    <h3 class="text-xl font-bold mb-4">Tanpa Download</h3>
-                    <p class="text-gray-400">Langsung mainkan game favoritmu di browser atau aplikasi tanpa perlu menunggu download yang lama.</p>
-                </div>
-                <div class="reveal">
-                    <div class="w-12 h-12 bg-indigo-600/20 rounded-2xl flex items-center justify-center mb-6">
-                        <i data-lucide="smartphone" class="text-indigo-500"></i>
-                    </div>
-                    <h3 class="text-xl font-bold mb-4">Multi-Platform</h3>
-                    <p class="text-gray-400">Akses game melalui Smartphone, Tablet, Laptop, hingga PC Windows/Mac dengan satu akun.</p>
-                </div>
-                <div class="reveal">
-                    <div class="w-12 h-12 bg-indigo-600/20 rounded-2xl flex items-center justify-center mb-6">
-                        <i data-lucide="hard-drive" class="text-indigo-500"></i>
-                    </div>
-                    <h3 class="text-xl font-bold mb-4">Hemat Penyimpanan</h3>
-                    <p class="text-gray-400">Tidak perlu SSD berkapasitas besar. Semua data game disimpan di cloud server premium kami.</p>
-                </div>
-            </div>
-        </section>
-
-        <!-- Pricing Section -->
-        <section id="pricing" class="py-24 px-6 max-w-7xl mx-auto">
-            <div class="text-center mb-16 reveal">
-                <h2 class="text-4xl font-bold mb-4">Paket Akses Premium</h2>
-                <p class="text-gray-400">Pilih paket yang sesuai dengan kebutuhan gaming kamu.</p>
-            </div>
-
-            <div class="grid md:grid-cols-4 gap-6 reveal">
-                <!-- 1 Minggu -->
-                <div class="glass-card p-8 flex flex-col">
-                    <h4 class="text-gray-400 font-semibold mb-2">BRONZE</h4>
-                    <div class="text-3xl font-bold mb-6">Rp40.000 <span class="text-sm font-normal text-gray-500">/minggu</span></div>
-                    <ul class="space-y-4 mb-8 text-sm text-gray-300 flex-grow">
-                        <li class="flex items-center gap-2"><i data-lucide="check" class="w-4 h-4 text-indigo-500"></i> Akses Amazon Luna</li>
-                        <li class="flex items-center gap-2"><i data-lucide="check" class="w-4 h-4 text-indigo-500"></i> Full Game FC 25</li>
-                        <li class="flex items-center gap-2"><i data-lucide="check" class="w-4 h-4 text-indigo-500"></i> Support HP & PC</li>
-                    </ul>
-                    <button onclick="buyPackage('1 Minggu', '40.000')" class="w-full py-4 rounded-xl border border-white/10 hover:bg-white/5 transition-all font-bold">Beli Sekarang</button>
-                </div>
-                <!-- 1 Bulan -->
-                <div class="glass-card p-8 flex flex-col pricing-best transform scale-105 relative">
-                    <div class="absolute -top-4 left-1/2 -translate-x-1/2 bg-indigo-600 text-[10px] px-3 py-1 rounded-full font-bold uppercase tracking-wider">Paling Populer</div>
-                    <h4 class="text-indigo-400 font-semibold mb-2">SILVER</h4>
-                    <div class="text-3xl font-bold mb-6">Rp60.000 <span class="text-sm font-normal text-gray-500">/bulan</span></div>
-                    <ul class="space-y-4 mb-8 text-sm text-gray-300 flex-grow">
-                        <li class="flex items-center gap-2"><i data-lucide="check" class="w-4 h-4 text-indigo-500"></i> Akses Amazon Luna</li>
-                        <li class="flex items-center gap-2"><i data-lucide="check" class="w-4 h-4 text-indigo-500"></i> Full Game FC 25 & 26</li>
-                        <li class="flex items-center gap-2"><i data-lucide="check" class="w-4 h-4 text-indigo-500"></i> Support HP & PC</li>
-                        <li class="flex items-center gap-2"><i data-lucide="check" class="w-4 h-4 text-indigo-500"></i> Garansi Full</li>
-                    </ul>
-                    <button onclick="buyPackage('1 Bulan', '60.000')" class="w-full py-4 rounded-xl bg-indigo-600 hover:bg-indigo-700 transition-all font-bold">Beli Sekarang</button>
-                </div>
-                <!-- 2 Bulan -->
-                <div class="glass-card p-8 flex flex-col">
-                    <h4 class="text-gray-400 font-semibold mb-2">GOLD</h4>
-                    <div class="text-3xl font-bold mb-6">Rp100.000 <span class="text-sm font-normal text-gray-500">/2 bulan</span></div>
-                    <ul class="space-y-4 mb-8 text-sm text-gray-300 flex-grow">
-                        <li class="flex items-center gap-2"><i data-lucide="check" class="w-4 h-4 text-indigo-500"></i> Akses Amazon Luna</li>
-                        <li class="flex items-center gap-2"><i data-lucide="check" class="w-4 h-4 text-indigo-500"></i> Library Game Premium</li>
-                        <li class="flex items-center gap-2"><i data-lucide="check" class="w-4 h-4 text-indigo-500"></i> Prioritas Antrian</li>
-                    </ul>
-                    <button onclick="buyPackage('2 Bulan', '100.000')" class="w-full py-4 rounded-xl border border-white/10 hover:bg-white/5 transition-all font-bold">Beli Sekarang</button>
-                </div>
-                <!-- 3 Bulan -->
-                <div class="glass-card p-8 flex flex-col">
-                    <h4 class="text-gray-400 font-semibold mb-2">PLATINUM</h4>
-                    <div class="text-3xl font-bold mb-6">Rp150.000 <span class="text-sm font-normal text-gray-500">/3 bulan</span></div>
-                    <ul class="space-y-4 mb-8 text-sm text-gray-300 flex-grow">
-                        <li class="flex items-center gap-2"><i data-lucide="check" class="w-4 h-4 text-indigo-500"></i> Akses Amazon Luna</li>
-                        <li class="flex items-center gap-2"><i data-lucide="check" class="w-4 h-4 text-indigo-500"></i> Best Value Price</li>
-                        <li class="flex items-center gap-2"><i data-lucide="check" class="w-4 h-4 text-indigo-500"></i> Full Support 24/7</li>
-                    </ul>
-                    <button onclick="buyPackage('3 Bulan', '150.000')" class="w-full py-4 rounded-xl border border-white/10 hover:bg-white/5 transition-all font-bold">Beli Sekarang</button>
-                </div>
-            </div>
-        </section>
-
-        <!-- Cara Pakai -->
-        <section class="py-24 bg-indigo-600/10 px-6">
-            <div class="max-w-4xl mx-auto reveal">
-                <h2 class="text-3xl font-bold text-center mb-12">Mudah, Cepat, Praktis</h2>
-                <div class="space-y-8">
-                    <div class="flex gap-6 items-start">
-                        <div class="w-10 h-10 shrink-0 bg-white text-black font-bold flex items-center justify-center rounded-full">1</div>
-                        <div>
-                            <h4 class="font-bold text-lg">Login Akun Luna</h4>
-                            <p class="text-gray-400">Dapatkan kredensial dari admin setelah melakukan pembayaran.</p>
-                        </div>
-                    </div>
-                    <div class="flex gap-6 items-start">
-                        <div class="w-10 h-10 shrink-0 bg-white text-black font-bold flex items-center justify-center rounded-full">2</div>
-                        <div>
-                            <h4 class="font-bold text-lg">Pilih Game</h4>
-                            <p class="text-gray-400">Cari judul game favoritmu di library Amazon Luna.</p>
-                        </div>
-                    </div>
-                    <div class="flex gap-6 items-start">
-                        <div class="w-10 h-10 shrink-0 bg-white text-black font-bold flex items-center justify-center rounded-full">3</div>
-                        <div>
-                            <h4 class="font-bold text-lg">Mulai Bermain</h4>
-                            <p class="text-gray-400">Hubungkan akun EA kamu dan nikmati game kualitas tinggi.</p>
-                        </div>
-                    </div>
-                </div>
-            </div>
-        </section>
-
-        <!-- Testimonials -->
-        <section class="py-24 px-6 max-w-6xl mx-auto">
-            <h2 class="text-3xl font-bold text-center mb-12 reveal">Apa Kata Mereka?</h2>
-            <div class="grid md:grid-cols-3 gap-8 reveal">
-                <div class="glass-card p-6">
-                    <div class="flex text-yellow-500 mb-4"><i data-lucide="star"></i><i data-lucide="star"></i><i data-lucide="star"></i><i data-lucide="star"></i><i data-lucide="star"></i></div>
-                    <p class="text-gray-300 italic mb-6">"Gak nyangka FC 25 bisa lancar di HP Infinix saya. Alex Cloud emang gokil!"</p>
-                    <div class="font-bold">- Rian Pratama</div>
-                </div>
-                <div class="glass-card p-6">
-                    <div class="flex text-yellow-500 mb-4"><i data-lucide="star"></i><i data-lucide="star"></i><i data-lucide="star"></i><i data-lucide="star"></i><i data-lucide="star"></i></div>
-                    <p class="text-gray-300 italic mb-6">"Adminnya fast respon, proses cuma 5 menit langsung bisa login Luna."</p>
-                    <div class="font-bold">- Dimas Wijaya</div>
-                </div>
-                <div class="glass-card p-6">
-                    <div class="flex text-yellow-500 mb-4"><i data-lucide="star"></i><i data-lucide="star"></i><i data-lucide="star"></i><i data-lucide="star"></i><i data-lucide="star"></i></div>
-                    <p class="text-gray-300 italic mb-6">"Worth it banget buat yang pengen main game spek dewa tapi budget pelajar."</p>
-                    <div class="font-bold">- Satria Baja</div>
-                </div>
-            </div>
-        </section>
-
-        <!-- Footer -->
-        <footer class="py-12 border-t border-white/5 px-6">
-            <div class="max-w-7xl mx-auto flex flex-col md:flex-row justify-between items-center gap-8">
-                <div>
-                    <div class="flex items-center gap-2 mb-4">
-                        <div class="w-6 h-6 bg-indigo-600 rounded flex items-center justify-center">
-                            <i data-lucide="cloud" class="w-4 h-4 text-white"></i>
-                        </div>
-                        <span class="font-bold tracking-tighter">ALEX<span class="text-indigo-500">CLOUD</span></span>
-                    </div>
-                    <p class="text-gray-500 text-sm">© 2024 Alex Cloud Game. Seluruh hak cipta dilindungi.</p>
-                </div>
-                <div class="flex gap-6">
-                    <a href="#" class="text-gray-400 hover:text-white transition-colors"><i data-lucide="instagram"></i></a>
-                    <a href="#" class="text-gray-400 hover:text-white transition-colors"><i data-lucide="youtube"></i></a>
-                    <a href="#" class="text-gray-400 hover:text-white transition-colors"><i data-lucide="twitter"></i></a>
-                </div>
-            </div>
-        </footer>
-    </main>
-
-    <!-- LOGIN PAGE -->
-    <section id="loginPage" class="page min-h-screen flex items-center justify-center px-6">
-        <div class="glass-card p-10 w-full max-w-md">
-            <div class="text-center mb-8">
-                <h2 class="text-2xl font-bold mb-2">Selamat Datang Kembali</h2>
-                <p class="text-gray-400 text-sm">Masuk untuk akses dashboard cloud gaming kamu</p>
-            </div>
-            <form id="loginForm" class="space-y-6">
-                <div>
-                    <label class="block text-sm font-medium text-gray-400 mb-2">Email</label>
-                    <input type="email" id="email" required class="w-full bg-white/5 border border-white/10 rounded-xl px-4 py-3 text-white focus:outline-none focus:border-indigo-500 transition-all" placeholder="name@email.com">
-                </div>
-                <div>
-                    <label class="block text-sm font-medium text-gray-400 mb-2">Password</label>
-                    <input type="password" id="password" required class="w-full bg-white/5 border border-white/10 rounded-xl px-4 py-3 text-white focus:outline-none focus:border-indigo-500 transition-all" placeholder="••••••••">
-                </div>
-                <button type="submit" class="w-full bg-indigo-600 py-3 rounded-xl font-bold hover:bg-indigo-700 transition-all shadow-lg shadow-indigo-600/20">Sign In</button>
-            </form>
-            <p class="text-center text-xs text-gray-500 mt-6">Belum punya akun? <a href="#pricing" onclick="showPage('home')" class="text-indigo-400">Beli Paket Disini</a></p>
+  <!-- Keunggulan -->
+  <section class="features section">
+    <div class="container">
+      <h2 class="section-title">Kenapa Alex Cloud Game?</h2>
+      <div class="features-grid">
+        <div class="feature-item">
+          <i class="fas fa-cloud-download-alt"></i>
+          <h3>No Download</h3>
+          <p>Main langsung lewat browser/cloud.</p>
         </div>
-    </section>
-
-    <!-- DASHBOARD PAGE -->
-    <section id="dashboardPage" class="page min-h-screen pt-24 px-6 max-w-6xl mx-auto">
-        <div class="flex flex-col md:flex-row justify-between items-start md:items-center gap-6 mb-12">
-            <div>
-                <h1 class="text-3xl font-bold mb-2">Halo, <span id="userName">User</span>! 👋</h1>
-                <p class="text-gray-400">Selamat datang di dashboard premium Alex Cloud Game.</p>
-            </div>
-            <div class="bg-indigo-600/20 border border-indigo-500/30 px-4 py-2 rounded-lg text-indigo-400 text-sm font-bold">
-                Status: Member Aktif
-            </div>
+        <div class="feature-item">
+          <i class="fas fa-mobile-alt"></i>
+          <h3>HP & PC</h3>
+          <p>Support semua perangkat.</p>
         </div>
-
-        <div class="grid md:grid-cols-3 gap-8">
-            <div class="glass-card p-6 md:col-span-2">
-                <h3 class="font-bold text-xl mb-6">Quick Actions</h3>
-                <div class="grid grid-cols-2 md:grid-cols-3 gap-4">
-                    <button class="flex flex-col items-center justify-center p-4 rounded-xl bg-white/5 hover:bg-white/10 transition-all border border-white/10 group">
-                        <i data-lucide="play-circle" class="w-8 h-8 mb-2 group-hover:text-indigo-400"></i>
-                        <span class="text-sm">Mulai Main</span>
-                    </button>
-                    <button class="flex flex-col items-center justify-center p-4 rounded-xl bg-white/5 hover:bg-white/10 transition-all border border-white/10 group">
-                        <i data-lucide="book-open" class="w-8 h-8 mb-2 group-hover:text-indigo-400"></i>
-                        <span class="text-sm">Tutorial</span>
-                    </button>
-                    <button class="flex flex-col items-center justify-center p-4 rounded-xl bg-white/5 hover:bg-white/10 transition-all border border-white/10 group">
-                        <i data-lucide="key" class="w-8 h-8 mb-2 group-hover:text-indigo-400"></i>
-                        <span class="text-sm">Lisensi Game</span>
-                    </button>
-                </div>
-            </div>
-            <div class="glass-card p-6">
-                <h3 class="font-bold text-xl mb-6">Info Paket</h3>
-                <div class="space-y-4">
-                    <div class="flex justify-between text-sm">
-                        <span class="text-gray-400">Masa Aktif</span>
-                        <span class="font-bold">24 Hari Lagi</span>
-                    </div>
-                    <div class="w-full bg-white/5 h-2 rounded-full overflow-hidden">
-                        <div class="bg-indigo-500 h-full w-4/5"></div>
-                    </div>
-                    <button class="w-full py-3 bg-white/5 border border-white/10 rounded-xl mt-4 text-sm font-bold hover:bg-white/10 transition-all">Perpanjang Paket</button>
-                </div>
-            </div>
+        <div class="feature-item">
+          <i class="fas fa-save"></i>
+          <h3>Hemat Storage</h3>
+          <p>Tidak perlu ratusan GB.</p>
         </div>
-
-        <div class="mt-12">
-            <h3 class="font-bold text-xl mb-6">Pengaturan Akun</h3>
-            <div class="glass-card p-6 flex items-center justify-between">
-                <div class="flex items-center gap-4">
-                    <div class="w-12 h-12 rounded-full bg-gray-800 flex items-center justify-center"><i data-lucide="user"></i></div>
-                    <div>
-                        <div id="userEmailDisplay" class="font-bold text-sm">email@example.com</div>
-                        <div class="text-xs text-gray-500">Ganti Password</div>
-                    </div>
-                </div>
-                <button onclick="logout()" class="text-red-500 text-sm font-bold flex items-center gap-2">
-                    <i data-lucide="log-out" class="w-4 h-4"></i> Keluar
-                </button>
-            </div>
+        <div class="feature-item">
+          <i class="fas fa-bolt"></i>
+          <h3>Cepat & Stabil</h3>
+          <p>Streaming kualitas tinggi.</p>
         </div>
-    </section>
+      </div>
+    </div>
+  </section>
 
-    <!-- JS Logic -->
-    <script>
-        // Initialize Lucide Icons
-        lucide.createIcons();
+  <!-- Pricing -->
+  <section id="pricing" class="pricing section">
+    <div class="container">
+      <h2 class="section-title">Pilih Paket Anda</h2>
+      <div class="pricing-grid">
+        <div class="price-card">
+          <h3>1 Minggu</h3>
+          <div class="price">Rp40.000</div>
+          <ul>
+            <li>Akses Full Library</li>
+            <li>Support 24/7</li>
+            <li>HD Streaming</li>
+          </ul>
+          <button onclick="beliPaket('1 Minggu')" class="btn-buy">Beli Sekarang</button>
+        </div>
+        <div class="price-card popular">
+          <div class="popular-badge">Paling Populer</div>
+          <h3>1 Bulan</h3>
+          <div class="price">Rp60.000</div>
+          <ul>
+            <li>Akses Full Library</li>
+            <li>Support 24/7</li>
+            <li>HD Streaming</li>
+            <li>Priority Server</li>
+          </ul>
+          <button onclick="beliPaket('1 Bulan')" class="btn-buy">Beli Sekarang</button>
+        </div>
+        <div class="price-card">
+          <h3>2 Bulan</h3>
+          <div class="price">Rp100.000</div>
+          <ul>
+            <li>Semua benefit 1 Bulan</li>
+            <li>Hemat Rp20.000</li>
+          </ul>
+          <button onclick="beliPaket('2 Bulan')" class="btn-buy">Beli Sekarang</button>
+        </div>
+        <div class="price-card">
+          <h3>3 Bulan</h3>
+          <div class="price">Rp150.000</div>
+          <ul>
+            <li>Semua benefit 2 Bulan</li>
+            <li>Hemat Rp30.000</li>
+          </ul>
+          <button onclick="beliPaket('3 Bulan')" class="btn-buy">Beli Sekarang</button>
+        </div>
+      </div>
+    </div>
+  </section>
 
-        // Constants
-        const ADMIN_WA_NUMBER = "628123456789"; // Ganti dengan nomor WA aslimu
+  <!-- Cara Pemakaian -->
+  <section id="how" class="how section">
+    <div class="container">
+      <h2 class="section-title">Cara Bermain</h2>
+      <div class="steps">
+        <div class="step"><span>1</span> Login ke akun Alex Cloud Game</div>
+        <div class="step"><span>2</span> Login akun Amazon Luna Anda</div>
+        <div class="step"><span>3</span> Pilih game (FC 25 / FC 26 dll)</div>
+        <div class="step"><span>4</span> Tautkan akun EA jika diperlukan</div>
+        <div class="step"><span>5</span> Klik Play & Nikmati!</div>
+      </div>
+    </div>
+  </section>
 
-        // --- Core Page Functions ---
-        function showPage(pageId) {
-            document.querySelectorAll('.page').forEach(p => p.classList.remove('active'));
-            document.getElementById(pageId + 'Page').classList.add('active');
-            window.scrollTo(0, 0);
-            updateNav();
-        }
+  <!-- Testimoni -->
+  <section class="testimonials section">
+    <div class="container">
+      <h2 class="section-title">Apa Kata Mereka</h2>
+      <div class="testimonial-grid">
+        <div class="testimonial">
+          <p>"Latency rendah banget, FC 26 lancar di HP!"</p>
+          <strong>- Andi, Jakarta</strong>
+        </div>
+        <div class="testimonial">
+          <p>"Harga terjangkau, lebih murah dari beli game asli."</p>
+          <strong>- Rina, Bandung</strong>
+        </div>
+        <div class="testimonial">
+          <p>"Support cepat via WhatsApp. Recommended!"</p>
+          <strong>- Budi, Surabaya</strong>
+        </div>
+      </div>
+    </div>
+  </section>
 
-        // --- Music Control ---
-        let isMusicPlaying = false;
-        const bgMusic = document.getElementById('bgMusic');
-        const musicBtn = document.getElementById('musicToggle');
+  <!-- FAQ -->
+  <section class="faq section">
+    <div class="container">
+      <h2 class="section-title">FAQ</h2>
+      <details>
+        <summary>Apakah bisa dimainkan di HP?</summary>
+        <p>Ya, full support Android & iOS via browser.</p>
+      </details>
+      <details>
+        <summary>Apakah butuh spek HP/PC tinggi?</summary>
+        <p>Tidak. Karena game dijalankan di cloud server kami.</p>
+      </details>
+      <details>
+        <summary>Apakah perlu download game?</summary>
+        <p>Tidak perlu sama sekali.</p>
+      </details>
+    </div>
+  </section>
 
-        function toggleMusic() {
-            if (isMusicPlaying) {
-                bgMusic.pause();
-                musicBtn.innerHTML = '<i data-lucide="volume-x"></i>';
-            } else {
-                bgMusic.play().catch(e => console.log("User must interact first"));
-                musicBtn.innerHTML = '<i data-lucide="volume-2"></i>';
-            }
-            isMusicPlaying = !isMusicPlaying;
-            lucide.createIcons();
-        }
+  <!-- Footer -->
+  <footer>
+    <div class="container">
+      <p>&copy; 2026 Alex Cloud Game. Semua hak dilindungi.</p>
+      <p>Kontak: <a href="https://wa.me/6281234567890" target="_blank">WhatsApp Admin</a></p>
+    </div>
+  </footer>
 
-        // --- Auth System (LocalStorage) ---
-        function updateNav() {
-            const user = JSON.parse(localStorage.getItem('alex_user'));
-            const navAuth = document.getElementById('navAuth');
-            
-            if (user) {
-                navAuth.innerHTML = `
-                    <div class="flex items-center gap-4">
-                        <button onclick="showPage('dashboard')" class="text-sm font-bold hover:text-indigo-400">Dashboard</button>
-                        <button onclick="logout()" class="bg-red-600/10 text-red-500 text-xs px-4 py-2 rounded-lg font-bold border border-red-500/20">Keluar</button>
-                    </div>
-                `;
-                document.getElementById('userName').innerText = user.email.split('@')[0];
-                document.getElementById('userEmailDisplay').innerText = user.email;
-            } else {
-                navAuth.innerHTML = `
-                    <button onclick="showPage('login')" class="bg-indigo-600 text-white text-sm px-6 py-2.5 rounded-xl font-bold shadow-lg shadow-indigo-600/20 hover:scale-105 transition-all">Sign In</button>
-                `;
-            }
-        }
+  <!-- Floating WhatsApp -->
+  <a href="https://wa.me/6281234567890" class="wa-float" target="_blank">
+    <i class="fab fa-whatsapp"></i>
+  </a>
 
-        document.getElementById('loginForm').addEventListener('submit', (e) => {
-            e.preventDefault();
-            const email = document.getElementById('email').value;
-            // Simulasi Login Sukses
-            localStorage.setItem('alex_user', JSON.stringify({ email: email }));
-            showPage('dashboard');
-        });
+  <!-- Music Control -->
+  <div class="music-control">
+    <button id="musicBtn">♪ Music ON</button>
+  </div>
 
-        function logout() {
-            localStorage.removeItem('alex_user');
-            showPage('home');
-        }
+  <audio id="bgMusic" loop>
+    <source src="https://www.soundhelix.com/examples/mp3/SoundHelix-Song-1.mp3" type="audio/mpeg">
+  </audio>
 
-        // --- Purchase Flow ---
-        function buyPackage(packageName, price) {
-            const text = `Halo admin, saya ingin membeli paket [${packageName}] seharga Rp${price} di Alex Cloud Game. Bagaimana cara pembayarannya?`;
-            const url = `https://wa.me/${ADMIN_WA_NUMBER}?text=${encodeURIComponent(text)}`;
-            window.open(url, '_blank');
-        }
-
-        // --- UI Effects ---
-        window.addEventListener('load', () => {
-            setTimeout(() => {
-                const loader = document.getElementById('loader');
-                loader.style.opacity = '0';
-                setTimeout(() => loader.style.display = 'none', 500);
-            }, 1000);
-            updateNav();
-        });
-
-        // Scroll Reveal Animation
-        function reveal() {
-            var reveals = document.querySelectorAll(".reveal");
-            for (var i = 0; i < reveals.length; i++) {
-                var windowHeight = window.innerHeight;
-                var elementTop = reveals[i].getBoundingClientRect().top;
-                var elementVisible = 150;
-                if (elementTop < windowHeight - elementVisible) {
-                    reveals[i].classList.add("active");
-                }
-            }
-        }
-        window.addEventListener("scroll", reveal);
-        reveal(); // Initial check
-    </script>
+  <script src="script.js"></script>
 </body>
 </html>
