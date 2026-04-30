@@ -1,77 +1,120 @@
-// Window Load: Remove Loader
-window.onload = function() {
-    const loader = document.getElementById('loader');
-    loader.classList.add('hidden');
-    
-    // Auto-scroll reveal initialization (manual)
-    const observerOptions = {
-        threshold: 0.1
-    };
+"/* ============================================
+   ALEX CLOUD GAME — script.js
+   Loading, navbar, reveal, music, purchase, etc.
+   ============================================ */
 
-    const observer = new IntersectionObserver((entries) => {
-        entries.forEach(entry => {
-            if (entry.isIntersecting) {
-                entry.target.classList.add('animate-fade-in');
-            }
-        });
-    }, observerOptions);
-
-    document.querySelectorAll('section').forEach(section => {
-        observer.observe(section);
-    });
+// ====== CONFIG — Edit sesuai bisnis Anda ======
+const CONFIG = {
+  WHATSAPP_NUMBER: '6281234567890', // <-- GANTI nomor WA admin (format internasional tanpa +)
+  BRAND: 'Alex Cloud Game',
 };
 
-// Background Music Control
-const musicBtn = document.getElementById('musicToggle');
-const musicIcon = document.getElementById('musicIcon');
-const bgMusic = document.getElementById('bgMusic');
-let isPlaying = false;
-
-musicBtn.addEventListener('click', () => {
-    if (isPlaying) {
-        bgMusic.pause();
-        musicIcon.classList.remove('fa-volume-up');
-        musicIcon.classList.add('fa-volume-mute');
-    } else {
-        bgMusic.play();
-        bgMusic.volume = 0.2; // Low volume
-        musicIcon.classList.remove('fa-volume-mute');
-        musicIcon.classList.add('fa-volume-up');
-    }
-    isPlaying = !isPlaying;
+// ====== Loader ======
+window.addEventListener('load', () => {
+  const loader = document.getElementById('loader');
+  if (!loader) return;
+  setTimeout(() => loader.classList.add('hide'), 900);
 });
 
-// WhatsApp Redirect Function
-function orderWA(paket) {
-    const phone = "6281234567890"; // Ganti dengan nomor WhatsApp Anda
-    const message = `Halo Alex Cloud Game, saya ingin membeli paket ${paket}. Mohon info pembayarannya.`;
-    const url = `https://api.whatsapp.com/send?phone=${phone}&text=${encodeURIComponent(message)}`;
-    window.open(url, '_blank');
+// ====== Year in footer ======
+const yearEl = document.getElementById('year');
+if (yearEl) yearEl.textContent = new Date().getFullYear();
+
+// ====== Navbar scroll effect ======
+const navbar = document.getElementById('navbar');
+if (navbar) {
+  window.addEventListener('scroll', () => {
+    if (window.scrollY > 20) navbar.classList.add('scrolled');
+    else navbar.classList.remove('scrolled');
+  });
 }
 
-// Login Simulation (For login.html & dashboard.html)
-function handleLogin(event) {
-    event.preventDefault();
-    const email = document.getElementById('email').value;
-    const pass = document.getElementById('password').value;
+// ====== Mobile menu toggle ======
+const menuBtn = document.getElementById('menuBtn');
+const navLinks = document.getElementById('navLinks');
+if (menuBtn && navLinks) {
+  menuBtn.addEventListener('click', () => navLinks.classList.toggle('open'));
+  navLinks.querySelectorAll('a').forEach(a =>
+    a.addEventListener('click', () => navLinks.classList.remove('open'))
+  );
+}
 
-    if(email && pass) {
-        // Simpan data di localStorage
-        localStorage.setItem('userEmail', email);
-        localStorage.setItem('isLoggedIn', 'true');
-        
-        // Redirect ke dashboard
-        window.location.href = 'dashboard.html';
+// ====== Reveal on scroll ======
+const revealEls = document.querySelectorAll('.reveal');
+if ('IntersectionObserver' in window && revealEls.length) {
+  const io = new IntersectionObserver((entries) => {
+    entries.forEach((entry, i) => {
+      if (entry.isIntersecting) {
+        setTimeout(() => entry.target.classList.add('visible'), i * 60);
+        io.unobserve(entry.target);
+      }
+    });
+  }, { threshold: 0.12, rootMargin: '0px 0px -40px 0px' });
+  revealEls.forEach(el => io.observe(el));
+} else {
+  revealEls.forEach(el => el.classList.add('visible'));
+}
+
+// ====== Background music toggle ======
+const bgMusic = document.getElementById('bgMusic');
+const musicToggle = document.getElementById('musicToggle');
+const musicIcon = document.getElementById('musicIcon');
+
+function setMusicIcon(on) {
+  if (!musicIcon) return;
+  musicIcon.className = on
+    ? 'fa-solid fa-volume-high'
+    : 'fa-solid fa-volume-xmark';
+}
+
+if (bgMusic && musicToggle) {
+  bgMusic.volume = 0.25;
+  let isPlaying = false;
+
+  // Try autoplay on first user interaction (browsers block autoplay without it)
+  const tryAutoplay = () => {
+    bgMusic.play().then(() => {
+      isPlaying = true;
+      setMusicIcon(true);
+    }).catch(() => {
+      isPlaying = false;
+      setMusicIcon(false);
+    });
+    document.removeEventListener('click', tryAutoplay);
+    document.removeEventListener('scroll', tryAutoplay);
+  };
+  document.addEventListener('click', tryAutoplay, { once: true });
+  document.addEventListener('scroll', tryAutoplay, { once: true });
+
+  musicToggle.addEventListener('click', (e) => {
+    e.stopPropagation();
+    if (isPlaying) {
+      bgMusic.pause();
+      isPlaying = false;
+      setMusicIcon(false);
     } else {
-        showToast('Mohon isi email dan password!');
+      bgMusic.play().then(() => {
+        isPlaying = true;
+        setMusicIcon(true);
+      }).catch(() => {});
     }
+  });
 }
 
-// Toast Notification
-function showToast(msg) {
-    const toast = document.createElement('div');
-    toast.className = 'fixed bottom-10 left-1/2 -translate-x-1/2 bg-white text-black px-6 py-3 rounded-full font-bold z-50 shadow-2xl';
-    toast.innerText = msg;
-    document.body.appendChild(toast);
-    setTimeout(() => toast.remove(), 3000);
+// ====== Purchase → WhatsApp redirect ======
+function buildWhatsappLink(plan) {
+  const msg = `Halo Admin, saya ingin membeli paket *${plan}* ${CONFIG.BRAND}. Mohon info pembayarannya. Terima kasih!`;
+  return `https://wa.me/${CONFIG.WHATSAPP_NUMBER}?text=${encodeURIComponent(msg)}`;
 }
+
+document.querySelectorAll('.buy-btn').forEach(btn => {
+  btn.addEventListener('click', (e) => {
+    e.preventDefault();
+    const plan = btn.getAttribute('data-plan') || 'Reguler';
+    window.open(buildWhatsappLink(plan), '_blank', 'noopener');
+  });
+});
+
+// ====== Expose for other pages ======
+window.AlexCloud = { CONFIG, buildWhatsappLink };
+"
