@@ -1,258 +1,440 @@
-<!DOCTYPE html>
-<html lang="id">
+"<!DOCTYPE html>
+<html lang=\"id\">
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Alex Cloud Game | Main Game Tanpa Download</title>
-    <!-- Google Fonts -->
-    <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@300;400;600;700;800&display=swap" rel="stylesheet">
-    <!-- Tailwind CSS -->
-    <script src="https://cdn.tailwindcss.com"></script>
-    <link rel="stylesheet" href="style.css">
-    <!-- Font Awesome for Icons -->
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+  <meta charset=\"UTF-8\" />
+  <meta name=\"viewport\" content=\"width=device-width, initial-scale=1.0\" />
+  <meta name=\"description\" content=\"Alex Cloud Game - Main game AAA seperti FC 25 & FC 26 tanpa download. Cloud gaming premium via Amazon Luna.\" />
+  <title>Alex Cloud Game — Cloud Gaming Premium</title>
+
+  <!-- Google Fonts: Syne (display) + Inter (body) -->
+  <link rel=\"preconnect\" href=\"https://fonts.googleapis.com\" />
+  <link rel=\"preconnect\" href=\"https://fonts.gstatic.com\" crossorigin />
+  <link href=\"https://fonts.googleapis.com/css2?family=Syne:wght@500;600;700;800&family=Inter:wght@300;400;500;600;700&display=swap\" rel=\"stylesheet\" />
+
+  <!-- Icons -->
+  <link rel=\"stylesheet\" href=\"https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css\" />
+
+  <link rel=\"stylesheet\" href=\"style.css\" />
 </head>
-<body class="bg-black text-white font-['Plus_Jakarta_Sans'] scroll-smooth overflow-x-hidden">
-
-    <!-- Loading Animation -->
-    <div id="loader" class="fixed inset-0 z-[100] bg-black flex items-center justify-center transition-opacity duration-700">
-        <div class="w-16 h-16 border-4 border-white border-t-transparent rounded-full animate-spin"></div>
+<body>
+  <!-- ============ LOADING OVERLAY ============ -->
+  <div class=\"loader\" id=\"loader\" data-testid=\"page-loader\">
+    <div class=\"loader-inner\">
+      <span class=\"loader-text\">ALEX CLOUD GAME</span>
+      <div class=\"loader-bar\"><span></span></div>
     </div>
+  </div>
 
-    <!-- Music Control Fixed -->
-    <div class="fixed bottom-6 right-6 z-50 flex items-center gap-2">
-        <button id="musicToggle" class="bg-white/10 backdrop-blur-md border border-white/20 p-4 rounded-full hover:bg-white/20 transition-all">
-            <i id="musicIcon" class="fas fa-volume-mute"></i>
+  <!-- ============ NAVBAR ============ -->
+  <header class=\"navbar\" id=\"navbar\">
+    <div class=\"container nav-wrap\">
+      <a href=\"#home\" class=\"logo\" data-testid=\"brand-logo\">
+        <span class=\"logo-dot\"></span>
+        Alex<span class=\"logo-accent\">Cloud</span>
+      </a>
+
+      <nav class=\"nav-links\" id=\"navLinks\">
+        <a href=\"#games\" data-testid=\"nav-games\">Game</a>
+        <a href=\"#features\" data-testid=\"nav-features\">Keunggulan</a>
+        <a href=\"#pricing\" data-testid=\"nav-pricing\">Harga</a>
+        <a href=\"#tutorial\" data-testid=\"nav-tutorial\">Tutorial</a>
+        <a href=\"#faq\" data-testid=\"nav-faq\">FAQ</a>
+      </nav>
+
+      <div class=\"nav-cta\">
+        <button id=\"musicToggle\" class=\"icon-btn\" aria-label=\"Toggle music\" data-testid=\"music-toggle-btn\">
+          <i class=\"fa-solid fa-volume-xmark\" id=\"musicIcon\"></i>
         </button>
-        <audio id="bgMusic" loop>
-            <source src="https://www.soundhelix.com/examples/mp3/SoundHelix-Song-1.mp3" type="audio/mpeg">
-        </audio>
+        <a href=\"login.html\" class=\"btn btn-ghost\" data-testid=\"nav-login-btn\">Masuk</a>
+        <button class=\"menu-btn\" id=\"menuBtn\" aria-label=\"Menu\" data-testid=\"mobile-menu-btn\">
+          <span></span><span></span><span></span>
+        </button>
+      </div>
+    </div>
+  </header>
+
+  <!-- ============ HERO ============ -->
+  <section class=\"hero\" id=\"home\">
+    <div class=\"hero-grid\"></div>
+    <div class=\"hero-glow\"></div>
+
+    <div class=\"container hero-inner\">
+      <span class=\"pill reveal\" data-testid=\"hero-pill\">
+        <span class=\"pill-dot\"></span> Powered by Amazon Luna
+      </span>
+
+      <h1 class=\"hero-title reveal\" data-testid=\"hero-title\">
+        Main Game <span class=\"stroke\">Tanpa Download</span><br />
+        Cloud Gaming <em>Premium.</em>
+      </h1>
+
+      <p class=\"hero-sub reveal\" data-testid=\"hero-subtitle\">
+        FC 25, FC 26, dan ratusan game AAA lainnya — langsung mainkan di HP atau PC
+        kamu. Tanpa install, tanpa ribet, tanpa beli console mahal.
+      </p>
+
+      <div class=\"hero-actions reveal\">
+        <a href=\"#pricing\" class=\"btn btn-primary\" data-testid=\"hero-buy-btn\">
+          <i class=\"fa-solid fa-bolt\"></i> Beli Sekarang
+        </a>
+        <a href=\"#games\" class=\"btn btn-outline\" data-testid=\"hero-games-btn\">
+          Lihat Game <i class=\"fa-solid fa-arrow-right\"></i>
+        </a>
+      </div>
+
+      <div class=\"hero-stats reveal\">
+        <div class=\"stat\"><strong>500+</strong><span>Pemain Aktif</span></div>
+        <div class=\"divider\"></div>
+        <div class=\"stat\"><strong>100+</strong><span>Judul Game</span></div>
+        <div class=\"divider\"></div>
+        <div class=\"stat\"><strong>4.9★</strong><span>Rating Pelanggan</span></div>
+      </div>
     </div>
 
-    <!-- Navbar -->
-    <nav class="fixed w-full z-40 bg-black/50 backdrop-blur-lg border-b border-white/10">
-        <div class="container mx-auto px-6 py-4 flex justify-between items-center">
-            <a href="#" class="text-2xl font-extrabold tracking-tighter">ALEX <span class="text-gray-400">CLOUD</span></a>
-            <div class="hidden md:flex space-x-8 text-sm font-medium uppercase tracking-widest">
-                <a href="#games" class="hover:text-gray-400 transition">Games</a>
-                <a href="#benefits" class="hover:text-gray-400 transition">Benefit</a>
-                <a href="#pricing" class="hover:text-gray-400 transition">Harga</a>
-                <a href="#faq" class="hover:text-gray-400 transition">FAQ</a>
-            </div>
-            <div class="flex items-center gap-4">
-                <a href="login.html" class="px-6 py-2 border border-white/20 rounded-full hover:bg-white hover:text-black transition duration-300 text-sm font-semibold">Login</a>
-            </div>
+    <div class=\"scroll-ind\">
+      <span></span> scroll
+    </div>
+  </section>
+
+  <!-- ============ GAMES ============ -->
+  <section class=\"section\" id=\"games\">
+    <div class=\"container\">
+      <div class=\"section-head reveal\">
+        <span class=\"eyebrow\">Katalog Game</span>
+        <h2>Main judul populer, <span class=\"stroke\">kapan saja.</span></h2>
+        <p>Semua game di Amazon Luna sudah termasuk dalam paket. Tinggal login, pilih game, dan main.</p>
+      </div>
+
+      <div class=\"games-grid\">
+        <article class=\"game-card reveal\" data-testid=\"game-card-fc25\">
+          <div class=\"game-media\" style=\"background-image:url('https://images.unsplash.com/photo-1579952363873-27f3bade9f55?w=900&q=80')\">
+            <span class=\"badge\">HOT</span>
+          </div>
+          <div class=\"game-body\">
+            <h3>EA Sports FC 25</h3>
+            <p>Simulasi sepak bola terbaik dengan grafis next-gen dan mode karier terbaru.</p>
+            <a href=\"#pricing\" class=\"btn btn-sm\" data-testid=\"play-fc25-btn\">Main Sekarang <i class=\"fa-solid fa-play\"></i></a>
+          </div>
+        </article>
+
+        <article class=\"game-card reveal\" data-testid=\"game-card-fc26\">
+          <div class=\"game-media\" style=\"background-image:url('https://images.unsplash.com/photo-1522778119026-d647f0596c20?w=900&q=80')\">
+            <span class=\"badge badge-new\">NEW</span>
+          </div>
+          <div class=\"game-body\">
+            <h3>EA Sports FC 26</h3>
+            <p>Rilis terbaru dengan gameplay lebih halus, roster terbaru, dan mode baru.</p>
+            <a href=\"#pricing\" class=\"btn btn-sm\" data-testid=\"play-fc26-btn\">Main Sekarang <i class=\"fa-solid fa-play\"></i></a>
+          </div>
+        </article>
+
+        <article class=\"game-card reveal\" data-testid=\"game-card-fortnite\">
+          <div class=\"game-media\" style=\"background-image:url('https://images.unsplash.com/photo-1542751371-adc38448a05e?w=900&q=80')\"></div>
+          <div class=\"game-body\">
+            <h3>Fortnite</h3>
+            <p>Battle royale legendaris langsung main di browser tanpa install.</p>
+            <a href=\"#pricing\" class=\"btn btn-sm\" data-testid=\"play-fortnite-btn\">Main Sekarang <i class=\"fa-solid fa-play\"></i></a>
+          </div>
+        </article>
+
+        <article class=\"game-card reveal\" data-testid=\"game-card-resident\">
+          <div class=\"game-media\" style=\"background-image:url('https://images.unsplash.com/photo-1511512578047-dfb367046420?w=900&q=80')\"></div>
+          <div class=\"game-body\">
+            <h3>Resident Evil Village</h3>
+            <p>Horror survival dengan kualitas sinematik kelas AAA.</p>
+            <a href=\"#pricing\" class=\"btn btn-sm\" data-testid=\"play-resident-btn\">Main Sekarang <i class=\"fa-solid fa-play\"></i></a>
+          </div>
+        </article>
+
+        <article class=\"game-card reveal\" data-testid=\"game-card-tomb\">
+          <div class=\"game-media\" style=\"background-image:url('https://images.unsplash.com/photo-1493711662062-fa541adb3fc8?w=900&q=80')\"></div>
+          <div class=\"game-body\">
+            <h3>Tomb Raider</h3>
+            <p>Petualangan Lara Croft dengan visual memukau dan cerita mendalam.</p>
+            <a href=\"#pricing\" class=\"btn btn-sm\" data-testid=\"play-tomb-btn\">Main Sekarang <i class=\"fa-solid fa-play\"></i></a>
+          </div>
+        </article>
+
+        <article class=\"game-card reveal\" data-testid=\"game-card-more\">
+          <div class=\"game-media\" style=\"background-image:url('https://images.unsplash.com/photo-1538481199705-c710c4e965fc?w=900&q=80')\">
+            <span class=\"badge\">100+</span>
+          </div>
+          <div class=\"game-body\">
+            <h3>Dan 100+ Game Lainnya</h3>
+            <p>Katalog Amazon Luna terus bertambah. Semua sudah termasuk paket.</p>
+            <a href=\"#pricing\" class=\"btn btn-sm\" data-testid=\"play-more-btn\">Lihat Semua <i class=\"fa-solid fa-arrow-right\"></i></a>
+          </div>
+        </article>
+      </div>
+    </div>
+  </section>
+
+  <!-- ============ FEATURES ============ -->
+  <section class=\"section section-alt\" id=\"features\">
+    <div class=\"container\">
+      <div class=\"section-head reveal\">
+        <span class=\"eyebrow\">Kenapa Alex Cloud</span>
+        <h2>Dibuat untuk gamer yang <span class=\"stroke\">ingin praktis.</span></h2>
+      </div>
+
+      <div class=\"features-grid\">
+        <div class=\"feature reveal\">
+          <div class=\"feature-ico\"><i class=\"fa-solid fa-cloud-arrow-down\"></i></div>
+          <h3>No Download</h3>
+          <p>Langsung main dari browser. Tidak perlu install game berat berjam-jam.</p>
         </div>
-    </nav>
-
-    <!-- Hero Section -->
-    <section class="relative min-h-screen flex items-center justify-center pt-20 px-6 overflow-hidden">
-        <div class="absolute inset-0 z-0">
-            <div class="absolute top-1/4 left-1/4 w-96 h-96 bg-white/5 rounded-full blur-[120px]"></div>
-            <div class="absolute bottom-1/4 right-1/4 w-96 h-96 bg-white/5 rounded-full blur-[120px]"></div>
+        <div class=\"feature reveal\">
+          <div class=\"feature-ico\"><i class=\"fa-solid fa-mobile-screen\"></i></div>
+          <h3>HP & PC</h3>
+          <p>Satu akun bisa dipakai di Android, iPhone, laptop, maupun PC.</p>
         </div>
-        
-        <div class="container mx-auto text-center relative z-10" data-aos="fade-up">
-            <h1 class="text-5xl md:text-8xl font-extrabold mb-6 tracking-tighter leading-tight">
-                MAIN GAME TANPA <br> <span class="text-transparent bg-clip-text bg-gradient-to-r from-white to-gray-500">DOWNLOAD.</span>
-            </h1>
-            <p class="text-gray-400 text-lg md:text-xl max-w-2xl mx-auto mb-10 font-light">
-                Nikmati pengalaman bermain FC 25, FC 26, dan ribuan game AAA lainnya langsung dari browser Anda melalui Amazon Luna. Cepat, Murah, dan Tanpa Lag.
-            </p>
-            <div class="flex flex-col md:flex-row justify-center gap-4">
-                <a href="#pricing" class="px-10 py-4 bg-white text-black font-bold rounded-full hover:scale-105 transition transform duration-300 shadow-xl shadow-white/10">Beli Sekarang</a>
-                <a href="#games" class="px-10 py-4 bg-transparent border border-white/20 text-white font-bold rounded-full hover:bg-white/10 transition transform duration-300">Lihat Games</a>
-            </div>
+        <div class=\"feature reveal\">
+          <div class=\"feature-ico\"><i class=\"fa-solid fa-bolt\"></i></div>
+          <h3>Anti Lag*</h3>
+          <p>Streaming 60 FPS stabil selama koneksi internet kamu lancar.</p>
         </div>
-    </section>
-
-    <!-- Games Section -->
-    <section id="games" class="py-24 bg-[#0a0a0a]">
-        <div class="container mx-auto px-6">
-            <div class="text-center mb-16">
-                <h2 class="text-4xl font-bold mb-4">Paling Banyak Dimainkan</h2>
-                <div class="w-20 h-1 bg-white mx-auto"></div>
-            </div>
-
-            <div class="grid grid-cols-1 md:grid-cols-3 gap-8">
-                <!-- Game Card 1 -->
-                <div class="group bg-[#111] border border-white/5 p-4 rounded-3xl transition-all hover:border-white/20 hover:-translate-y-2">
-                    <div class="relative overflow-hidden rounded-2xl mb-4 aspect-[16/9]">
-                        <img src="https://images.unsplash.com/photo-1542751371-adc38448a05e?auto=format&fit=crop&q=80&w=800" alt="FC 25" class="w-full h-full object-cover transition duration-500 group-hover:scale-110 opacity-70 group-hover:opacity-100">
-                        <div class="absolute inset-0 bg-gradient-to-t from-black via-transparent to-transparent"></div>
-                    </div>
-                    <h3 class="text-xl font-bold mb-2">EA Sports FC 25</h3>
-                    <p class="text-gray-500 text-sm mb-4">Mainkan edisi terbaru sepakbola dengan fitur HyperMotion terbaik.</p>
-                    <button class="w-full py-3 bg-white/5 border border-white/10 rounded-xl hover:bg-white hover:text-black transition font-bold">Main Sekarang</button>
-                </div>
-                <!-- Game Card 2 -->
-                <div class="group bg-[#111] border border-white/5 p-4 rounded-3xl transition-all hover:border-white/20 hover:-translate-y-2">
-                    <div class="relative overflow-hidden rounded-2xl mb-4 aspect-[16/9]">
-                        <img src="https://images.unsplash.com/photo-1493711662062-fa541adb3fc8?auto=format&fit=crop&q=80&w=800" alt="FC 26" class="w-full h-full object-cover transition duration-500 group-hover:scale-110 opacity-70 group-hover:opacity-100">
-                        <div class="absolute inset-0 bg-gradient-to-t from-black via-transparent to-transparent"></div>
-                    </div>
-                    <h3 class="text-xl font-bold mb-2">EA Sports FC 26</h3>
-                    <p class="text-gray-500 text-sm mb-4">Segera hadir dengan update pemain dan gameplay paling realistis.</p>
-                    <button class="w-full py-3 bg-white/5 border border-white/10 rounded-xl hover:bg-white hover:text-black transition font-bold">Main Sekarang</button>
-                </div>
-                <!-- Game Card 3 -->
-                <div class="group bg-[#111] border border-white/5 p-4 rounded-3xl transition-all hover:border-white/20 hover:-translate-y-2">
-                    <div class="relative overflow-hidden rounded-2xl mb-4 aspect-[16/9]">
-                        <img src="https://images.unsplash.com/photo-1612287230202-1ff1d85d1bdf?auto=format&fit=crop&q=80&w=800" alt="Luna Games" class="w-full h-full object-cover transition duration-500 group-hover:scale-110 opacity-70 group-hover:opacity-100">
-                        <div class="absolute inset-0 bg-gradient-to-t from-black via-transparent to-transparent"></div>
-                    </div>
-                    <h3 class="text-xl font-bold mb-2">Amazon Luna Library</h3>
-                    <p class="text-gray-500 text-sm mb-4">Akses ratusan game premium lainnya di satu platform cloud.</p>
-                    <button class="w-full py-3 bg-white/5 border border-white/10 rounded-xl hover:bg-white hover:text-black transition font-bold">Eksplorasi</button>
-                </div>
-            </div>
+        <div class=\"feature reveal\">
+          <div class=\"feature-ico\"><i class=\"fa-solid fa-database\"></i></div>
+          <h3>Hemat Storage</h3>
+          <p>Nol GB terpakai di device. Game berjalan di server cloud Amazon.</p>
         </div>
-    </section>
-
-    <!-- Benefits -->
-    <section id="benefits" class="py-24 border-y border-white/5">
-        <div class="container mx-auto px-6">
-            <div class="grid grid-cols-1 md:grid-cols-4 gap-12 text-center">
-                <div>
-                    <div class="w-16 h-16 bg-white/5 border border-white/10 rounded-2xl flex items-center justify-center mx-auto mb-6 text-2xl">
-                        <i class="fas fa-cloud-download-alt"></i>
-                    </div>
-                    <h4 class="font-bold mb-2">Tanpa Download</h4>
-                    <p class="text-gray-500 text-sm">Klik dan langsung main tanpa nunggu instalasi.</p>
-                </div>
-                <div>
-                    <div class="w-16 h-16 bg-white/5 border border-white/10 rounded-2xl flex items-center justify-center mx-auto mb-6 text-2xl">
-                        <i class="fas fa-bolt"></i>
-                    </div>
-                    <h4 class="font-bold mb-2">Anti Lag</h4>
-                    <p class="text-gray-500 text-sm">Server premium menjamin kestabilan koneksi Anda.</p>
-                </div>
-                <div>
-                    <div class="w-16 h-16 bg-white/5 border border-white/10 rounded-2xl flex items-center justify-center mx-auto mb-6 text-2xl">
-                        <i class="fas fa-mobile-alt"></i>
-                    </div>
-                    <h4 class="font-bold mb-2">Cross-Platform</h4>
-                    <p class="text-gray-500 text-sm">Bisa di HP, Laptop, atau PC kentang sekalipun.</p>
-                </div>
-                <div>
-                    <div class="w-16 h-16 bg-white/5 border border-white/10 rounded-2xl flex items-center justify-center mx-auto mb-6 text-2xl">
-                        <i class="fas fa-hdd"></i>
-                    </div>
-                    <h4 class="font-bold mb-2">Hemat Storage</h4>
-                    <p class="text-gray-500 text-sm">Tidak memakan memori di device kesayangan Anda.</p>
-                </div>
-            </div>
+        <div class=\"feature reveal\">
+          <div class=\"feature-ico\"><i class=\"fa-solid fa-shield-halved\"></i></div>
+          <h3>Akun Garansi</h3>
+          <p>Akun aktif selama masa paket. Ada garansi penggantian jika bermasalah.</p>
         </div>
-    </section>
-
-    <!-- Pricing Section -->
-    <section id="pricing" class="py-24 bg-[#050505]">
-        <div class="container mx-auto px-6">
-            <div class="text-center mb-16">
-                <h2 class="text-4xl font-bold mb-4 uppercase tracking-widest">Pilih Paket Cloud</h2>
-                <p class="text-gray-500">Harga terjangkau untuk pengalaman gaming sultan.</p>
-            </div>
-
-            <div class="grid grid-cols-1 md:grid-cols-3 gap-8">
-                <!-- Daily -->
-                <div class="bg-[#111] p-8 rounded-3xl border border-white/5 transition hover:border-white/40">
-                    <div class="mb-6">
-                        <span class="text-gray-400 text-sm uppercase tracking-widest">Harian</span>
-                        <h3 class="text-4xl font-bold mt-2">Rp 15.000</h3>
-                    </div>
-                    <ul class="space-y-4 text-sm text-gray-400 mb-8">
-                        <li><i class="fas fa-check text-white mr-2"></i> Akses 24 Jam Full</li>
-                        <li><i class="fas fa-check text-white mr-2"></i> Kualitas HD 1080p</li>
-                        <li><i class="fas fa-check text-white mr-2"></i> Customer Support</li>
-                    </ul>
-                    <button onclick="orderWA('Harian')" class="w-full py-4 bg-white/5 border border-white/10 rounded-2xl font-bold hover:bg-white hover:text-black transition">Beli Sekarang</button>
-                </div>
-                <!-- Monthly (Premium) -->
-                <div class="bg-white text-black p-8 rounded-3xl border border-white relative transform scale-105 shadow-2xl shadow-white/10">
-                    <div class="absolute -top-4 left-1/2 -translate-x-1/2 bg-black text-white px-4 py-1 rounded-full text-xs font-bold uppercase">Best Value</div>
-                    <div class="mb-6">
-                        <span class="text-gray-700 text-sm uppercase tracking-widest">Bulanan</span>
-                        <h3 class="text-4xl font-bold mt-2">Rp 250.000</h3>
-                    </div>
-                    <ul class="space-y-4 text-sm text-gray-700 mb-8">
-                        <li><i class="fas fa-check text-black mr-2"></i> Akses 30 Hari</li>
-                        <li><i class="fas fa-check text-black mr-2"></i> Kualitas Ultra HD</li>
-                        <li><i class="fas fa-check text-black mr-2"></i> Prioritas Antrian</li>
-                    </ul>
-                    <button onclick="orderWA('Bulanan')" class="w-full py-4 bg-black text-white rounded-2xl font-bold hover:opacity-80 transition">Beli Sekarang</button>
-                </div>
-                <!-- Weekly -->
-                <div class="bg-[#111] p-8 rounded-3xl border border-white/5 transition hover:border-white/40">
-                    <div class="mb-6">
-                        <span class="text-gray-400 text-sm uppercase tracking-widest">Mingguan</span>
-                        <h3 class="text-4xl font-bold mt-2">Rp 75.000</h3>
-                    </div>
-                    <ul class="space-y-4 text-sm text-gray-400 mb-8">
-                        <li><i class="fas fa-check text-white mr-2"></i> Akses 7 Hari</li>
-                        <li><i class="fas fa-check text-white mr-2"></i> Kualitas HD 1080p</li>
-                        <li><i class="fas fa-check text-white mr-2"></i> Bebas Ganti Game</li>
-                    </ul>
-                    <button onclick="orderWA('Mingguan')" class="w-full py-4 bg-white/5 border border-white/10 rounded-2xl font-bold hover:bg-white hover:text-black transition">Beli Sekarang</button>
-                </div>
-            </div>
+        <div class=\"feature reveal\">
+          <div class=\"feature-ico\"><i class=\"fa-solid fa-headset\"></i></div>
+          <h3>Support 24/7</h3>
+          <p>Tim kami siap bantu via WhatsApp kapan pun ada kendala.</p>
         </div>
-    </section>
+      </div>
+    </div>
+  </section>
 
-    <!-- Testimonials -->
-    <section class="py-24 border-t border-white/5">
-        <div class="container mx-auto px-6">
-            <h2 class="text-3xl font-bold text-center mb-16">Apa Kata Gamer?</h2>
-            <div class="grid grid-cols-1 md:grid-cols-3 gap-8">
-                <div class="bg-white/5 p-8 rounded-3xl border border-white/10 italic text-gray-300">
-                    "Gila sih, main FC 25 di HP berasa pake console PS5. Ga nyangka cloud gaming selancar ini di Alex Cloud!"
-                    <div class="mt-6 font-bold not-italic text-white">— Budi, Pro Player</div>
-                </div>
-                <div class="bg-white/5 p-8 rounded-3xl border border-white/10 italic text-gray-300">
-                    "Hemat banget storage laptop gw. Tinggal buka browser, gas main. Adminnya juga fast respon."
-                    <div class="mt-6 font-bold not-italic text-white">— Sarah, Casual Gamer</div>
-                </div>
-                <div class="bg-white/5 p-8 rounded-3xl border border-white/10 italic text-gray-300">
-                    "Awalnya ragu, pas nyoba paket harian langsung ketagihan. Grafik mentok kanan no debat."
-                    <div class="mt-6 font-bold not-italic text-white">— Rizky, Tech Enthusiast</div>
-                </div>
-            </div>
+  <!-- ============ PRICING ============ -->
+  <section class=\"section\" id=\"pricing\">
+    <div class=\"container\">
+      <div class=\"section-head reveal\">
+        <span class=\"eyebrow\">Paket Harga</span>
+        <h2>Pilih paket sesuai <span class=\"stroke\">kebutuhan main kamu.</span></h2>
+        <p>Tanpa biaya tersembunyi. Bayar sekali, langsung aktif.</p>
+      </div>
+
+      <div class=\"pricing-grid\">
+        <div class=\"price-card reveal\" data-testid=\"price-card-harian\">
+          <div class=\"price-head\">
+            <h3>Harian</h3>
+            <p>Cocok untuk coba-coba / main singkat.</p>
+          </div>
+          <div class=\"price-value\">
+            <span class=\"curr\">Rp</span><strong>15.000</strong><span class=\"per\">/hari</span>
+          </div>
+          <ul class=\"price-list\">
+            <li><i class=\"fa-solid fa-check\"></i> Akses 24 jam penuh</li>
+            <li><i class=\"fa-solid fa-check\"></i> Semua game Amazon Luna</li>
+            <li><i class=\"fa-solid fa-check\"></i> Main di HP & PC</li>
+            <li><i class=\"fa-solid fa-check\"></i> Support WhatsApp</li>
+          </ul>
+          <button class=\"btn btn-primary btn-block buy-btn\" data-plan=\"Harian\" data-testid=\"buy-harian-btn\">
+            Beli Sekarang
+          </button>
         </div>
-    </section>
 
-    <!-- FAQ -->
-    <section id="faq" class="py-24 bg-[#0a0a0a]">
-        <div class="container mx-auto px-6 max-w-3xl">
-            <h2 class="text-3xl font-bold text-center mb-12">Paling Sering Ditanyakan</h2>
-            <div class="space-y-4">
-                <div class="border border-white/10 rounded-2xl p-6 hover:bg-white/5 transition cursor-pointer group">
-                    <h5 class="font-bold flex justify-between">Cara mainnya gimana? <i class="fas fa-chevron-down opacity-50 group-hover:translate-y-1 transition"></i></h5>
-                    <p class="text-gray-500 text-sm mt-3">Setelah beli, Anda akan dapat akun Amazon Luna. Login di browser Chrome/Safari, lalu klik Play pada game yang diinginkan.</p>
-                </div>
-                <div class="border border-white/10 rounded-2xl p-6 hover:bg-white/5 transition cursor-pointer group">
-                    <h5 class="font-bold flex justify-between">Butuh spesifikasi tinggi? <i class="fas fa-chevron-down opacity-50 group-hover:translate-y-1 transition"></i></h5>
-                    <p class="text-gray-500 text-sm mt-3">Sama sekali tidak. Yang Anda butuhkan hanyalah internet stabil (minimal 10Mbps) dan browser modern.</p>
-                </div>
-                <div class="border border-white/10 rounded-2xl p-6 hover:bg-white/5 transition cursor-pointer group">
-                    <h5 class="font-bold flex justify-between">Bisa main di HP? <i class="fas fa-chevron-down opacity-50 group-hover:translate-y-1 transition"></i></h5>
-                    <p class="text-gray-500 text-sm mt-3">Bisa banget! Amazon Luna support Android dan iOS melalui web app mereka.</p>
-                </div>
-            </div>
+        <div class=\"price-card featured reveal\" data-testid=\"price-card-mingguan\">
+          <span class=\"ribbon\">Paling Populer</span>
+          <div class=\"price-head\">
+            <h3>Mingguan</h3>
+            <p>Paket favorit — value terbaik.</p>
+          </div>
+          <div class=\"price-value\">
+            <span class=\"curr\">Rp</span><strong>75.000</strong><span class=\"per\">/minggu</span>
+          </div>
+          <ul class=\"price-list\">
+            <li><i class=\"fa-solid fa-check\"></i> Akses 7 hari penuh</li>
+            <li><i class=\"fa-solid fa-check\"></i> Semua game Amazon Luna</li>
+            <li><i class=\"fa-solid fa-check\"></i> Save progress cloud</li>
+            <li><i class=\"fa-solid fa-check\"></i> Support prioritas</li>
+            <li><i class=\"fa-solid fa-check\"></i> Garansi akun</li>
+          </ul>
+          <button class=\"btn btn-primary btn-block buy-btn\" data-plan=\"Mingguan\" data-testid=\"buy-mingguan-btn\">
+            Beli Sekarang
+          </button>
         </div>
-    </section>
 
-    <!-- Footer -->
-    <footer class="py-12 border-t border-white/10">
-        <div class="container mx-auto px-6 text-center">
-            <h2 class="text-2xl font-black mb-4">ALEX CLOUD GAME</h2>
-            <div class="flex justify-center space-x-6 mb-8 text-gray-500">
-                <a href="#" class="hover:text-white transition"><i class="fab fa-whatsapp text-2xl"></i></a>
-                <a href="#" class="hover:text-white transition"><i class="fab fa-instagram text-2xl"></i></a>
-                <a href="#" class="hover:text-white transition"><i class="fab fa-telegram-plane text-2xl"></i></a>
-            </div>
-            <p class="text-gray-600 text-xs tracking-widest uppercase">&copy; 2024 Alex Cloud Gaming. Powered by Amazon Luna.</p>
+        <div class=\"price-card reveal\" data-testid=\"price-card-bulanan\">
+          <div class=\"price-head\">
+            <h3>Bulanan</h3>
+            <p>Untuk kamu yang main rutin tiap hari.</p>
+          </div>
+          <div class=\"price-value\">
+            <span class=\"curr\">Rp</span><strong>200.000</strong><span class=\"per\">/bulan</span>
+          </div>
+          <ul class=\"price-list\">
+            <li><i class=\"fa-solid fa-check\"></i> Akses 30 hari penuh</li>
+            <li><i class=\"fa-solid fa-check\"></i> Semua game Amazon Luna</li>
+            <li><i class=\"fa-solid fa-check\"></i> Save progress cloud</li>
+            <li><i class=\"fa-solid fa-check\"></i> Support prioritas</li>
+            <li><i class=\"fa-solid fa-check\"></i> Garansi full + bonus</li>
+          </ul>
+          <button class=\"btn btn-primary btn-block buy-btn\" data-plan=\"Bulanan\" data-testid=\"buy-bulanan-btn\">
+            Beli Sekarang
+          </button>
         </div>
-    </footer>
+      </div>
+    </div>
+  </section>
 
-    <script src="script.js"></script>
+  <!-- ============ TUTORIAL ============ -->
+  <section class=\"section section-alt\" id=\"tutorial\">
+    <div class=\"container\">
+      <div class=\"section-head reveal\">
+        <span class=\"eyebrow\">Cara Pakai</span>
+        <h2>Dari bayar sampai main — <span class=\"stroke\">3 langkah saja.</span></h2>
+      </div>
+
+      <div class=\"steps\">
+        <div class=\"step reveal\">
+          <span class=\"step-num\">01</span>
+          <h3>Beli Paket</h3>
+          <p>Pilih paket (Harian / Mingguan / Bulanan), klik <b>Beli Sekarang</b>, lalu selesaikan pembayaran via WhatsApp.</p>
+        </div>
+        <div class=\"step reveal\">
+          <span class=\"step-num\">02</span>
+          <h3>Login Amazon Luna</h3>
+          <p>Kami kirim email & password akun. Buka <b>luna.amazon.com</b>, masukkan data login, dan pilih game yang ingin dimainkan.</p>
+        </div>
+        <div class=\"step reveal\">
+          <span class=\"step-num\">03</span>
+          <h3>Main & Save Progress</h3>
+          <p>Main FC 25 / FC 26 atau game lain. Progress otomatis tersimpan di cloud — bisa dilanjut di device mana saja.</p>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ============ TESTIMONIALS ============ -->
+  <section class=\"section\" id=\"testimonials\">
+    <div class=\"container\">
+      <div class=\"section-head reveal\">
+        <span class=\"eyebrow\">Testimoni</span>
+        <h2>Dipercaya <span class=\"stroke\">ratusan gamer</span> Indonesia.</h2>
+      </div>
+
+      <div class=\"testi-grid\">
+        <div class=\"testi reveal\">
+          <div class=\"stars\">★★★★★</div>
+          <p>\"Gila sih, di HP kentang bisa main FC 26 lancar banget. Nggak perlu beli PS5 lagi. Rekomendasi!\"</p>
+          <div class=\"testi-user\">
+            <div class=\"avatar\">R</div>
+            <div><strong>Rizky A.</strong><span>Jakarta</span></div>
+          </div>
+        </div>
+        <div class=\"testi reveal\">
+          <div class=\"stars\">★★★★★</div>
+          <p>\"Admin fast respon, akun langsung aktif. Udah langganan bulanan 3 bulan berturut-turut.\"</p>
+          <div class=\"testi-user\">
+            <div class=\"avatar\">D</div>
+            <div><strong>Dewi S.</strong><span>Surabaya</span></div>
+          </div>
+        </div>
+        <div class=\"testi reveal\">
+          <div class=\"stars\">★★★★★</div>
+          <p>\"Harga murah, kualitas premium. Bisa main di kos-kosan pakai laptop tipis, tetep 60fps.\"</p>
+          <div class=\"testi-user\">
+            <div class=\"avatar\">F</div>
+            <div><strong>Fahmi P.</strong><span>Bandung</span></div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ============ FAQ ============ -->
+  <section class=\"section section-alt\" id=\"faq\">
+    <div class=\"container\">
+      <div class=\"section-head reveal\">
+        <span class=\"eyebrow\">Pertanyaan</span>
+        <h2>FAQ <span class=\"stroke\">Alex Cloud Game</span></h2>
+      </div>
+
+      <div class=\"faq-list\">
+        <details class=\"faq-item reveal\" data-testid=\"faq-1\">
+          <summary>Bagaimana cara mulai main?</summary>
+          <p>Pilih paket, klik Beli Sekarang, lakukan pembayaran via WhatsApp. Akun Amazon Luna akan kami kirim maksimal 10 menit.</p>
+        </details>
+        <details class=\"faq-item reveal\" data-testid=\"faq-2\">
+          <summary>Apakah butuh spek PC tinggi?</summary>
+          <p>Tidak. Game berjalan di server Amazon. Yang kamu butuhkan hanya browser Chrome dan internet stabil (min. 10 Mbps).</p>
+        </details>
+        <details class=\"faq-item reveal\" data-testid=\"faq-3\">
+          <summary>Bisa dimainkan di HP?</summary>
+          <p>Bisa. Support Android & iOS lewat browser atau app Amazon Luna. Disarankan pakai gamepad bluetooth.</p>
+        </details>
+        <details class=\"faq-item reveal\" data-testid=\"faq-4\">
+          <summary>Apakah progress game tersimpan?</summary>
+          <p>Iya, semua progress tersimpan otomatis di cloud. Bisa dilanjutkan kapan pun, di device mana pun.</p>
+        </details>
+        <details class=\"faq-item reveal\" data-testid=\"faq-5\">
+          <summary>Bagaimana jika akun bermasalah?</summary>
+          <p>Kami memberi garansi penggantian akun selama masa aktif paket. Hubungi admin via WhatsApp untuk bantuan.</p>
+        </details>
+      </div>
+    </div>
+  </section>
+
+  <!-- ============ CTA ============ -->
+  <section class=\"cta-big\">
+    <div class=\"container cta-inner reveal\">
+      <h2>Siap main <span class=\"stroke\">FC 26</span> malam ini?</h2>
+      <p>Tanpa download. Tanpa console mahal. Langsung main dari device yang kamu punya.</p>
+      <a href=\"#pricing\" class=\"btn btn-primary btn-lg\" data-testid=\"cta-bottom-btn\">
+        <i class=\"fa-solid fa-bolt\"></i> Ambil Paket Sekarang
+      </a>
+    </div>
+  </section>
+
+  <!-- ============ FOOTER ============ -->
+  <footer class=\"footer\">
+    <div class=\"container footer-grid\">
+      <div>
+        <a href=\"#home\" class=\"logo logo-lg\">
+          <span class=\"logo-dot\"></span>
+          Alex<span class=\"logo-accent\">Cloud</span>
+        </a>
+        <p class=\"muted\">Cloud gaming premium berbasis Amazon Luna untuk gamer Indonesia.</p>
+      </div>
+
+      <div>
+        <h4>Navigasi</h4>
+        <a href=\"#games\">Game</a>
+        <a href=\"#features\">Keunggulan</a>
+        <a href=\"#pricing\">Harga</a>
+        <a href=\"#faq\">FAQ</a>
+      </div>
+
+      <div>
+        <h4>Kontak</h4>
+        <a href=\"https://wa.me/6281234567890\" target=\"_blank\" rel=\"noopener\" data-testid=\"footer-wa-link\">
+          <i class=\"fa-brands fa-whatsapp\"></i> WhatsApp
+        </a>
+        <a href=\"login.html\" data-testid=\"footer-login-link\">
+          <i class=\"fa-solid fa-user\"></i> Login
+        </a>
+      </div>
+    </div>
+    <div class=\"container footer-bottom\">
+      <span>© <span id=\"year\"></span> Alex Cloud Game. All rights reserved.</span>
+      <span class=\"muted\">Made with ♥ for Indonesian gamers</span>
+    </div>
+  </footer>
+
+  <!-- ============ BACKGROUND MUSIC ============ -->
+  <audio id=\"bgMusic\" loop preload=\"auto\">
+    <source src=\"https://cdn.pixabay.com/download/audio/2022/08/23/audio_d16737dc28.mp3?filename=cyberpunk-2099-11122.mp3\" type=\"audio/mpeg\" />
+  </audio>
+
+  <script src=\"script.js\"></script>
 </body>
 </html>
+"
