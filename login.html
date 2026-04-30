@@ -1,0 +1,38 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Login | Alex Cloud Game</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;600;800&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="style.css">
+</head>
+<body class="bg-black text-white font-['Plus_Jakarta_Sans'] h-screen flex items-center justify-center">
+
+    <div class="w-full max-w-md p-8 glass rounded-[40px] border border-white/10 mx-4">
+        <div class="text-center mb-10">
+            <a href="index.html" class="text-2xl font-black block mb-2">ALEX CLOUD</a>
+            <p class="text-gray-500 text-sm">Masuk untuk mengelola akun cloud gaming Anda.</p>
+        </div>
+
+        <form id="loginForm" onsubmit="handleLogin(event)" class="space-y-6">
+            <div>
+                <label class="block text-xs uppercase tracking-widest text-gray-500 mb-2">Email Address</label>
+                <input type="email" id="email" required class="w-full bg-white/5 border border-white/10 rounded-2xl px-6 py-4 focus:outline-none focus:border-white transition" placeholder="alex@gmail.com">
+            </div>
+            <div>
+                <label class="block text-xs uppercase tracking-widest text-gray-500 mb-2">Password</label>
+                <input type="password" id="password" required class="w-full bg-white/5 border border-white/10 rounded-2xl px-6 py-4 focus:outline-none focus:border-white transition" placeholder="••••••••">
+            </div>
+            <button type="submit" class="w-full py-4 bg-white text-black font-bold rounded-2xl hover:scale-[1.02] active:scale-95 transition shadow-lg shadow-white/10">Log In</button>
+        </form>
+
+        <div class="mt-8 text-center text-sm text-gray-500">
+            Belum punya akun? <a href="#" onclick="orderWA('Daftar Akun')" class="text-white hover:underline">Hubungi Admin</a>
+        </div>
+    </div>
+
+    <script src="script.js"></script>
+</body>
+</html>
