@@ -1,103 +1,148 @@
-<!DOCTYPE html>
-<html lang="id">
+"<!DOCTYPE html>
+<html lang=\"id\">
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Dashboard | Alex Cloud Game</title>
-    <script src="https://cdn.tailwindcss.com"></script>
-    <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;600;800&display=swap" rel="stylesheet">
-    <link rel="stylesheet" href="style.css">
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+  <meta charset=\"UTF-8\" />
+  <meta name=\"viewport\" content=\"width=device-width, initial-scale=1.0\" />
+  <title>Dashboard — Alex Cloud Game</title>
+
+  <link rel=\"preconnect\" href=\"https://fonts.googleapis.com\" />
+  <link rel=\"preconnect\" href=\"https://fonts.gstatic.com\" crossorigin />
+  <link href=\"https://fonts.googleapis.com/css2?family=Syne:wght@500;600;700;800&family=Inter:wght@300;400;500;600;700&display=swap\" rel=\"stylesheet\" />
+  <link rel=\"stylesheet\" href=\"https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css\" />
+  <link rel=\"stylesheet\" href=\"style.css\" />
 </head>
-<body class="bg-[#050505] text-white font-['Plus_Jakarta_Sans'] min-h-screen">
+<body>
+  <div class=\"dash-wrap\">
+    <div class=\"container\">
+      <!-- Header -->
+      <header class=\"dash-header\">
+        <a href=\"index.html\" class=\"logo logo-lg\">
+          <span class=\"logo-dot\"></span>
+          Alex<span class=\"logo-accent\">Cloud</span>
+        </a>
+        <div style=\"display:flex; gap:10px; align-items:center;\">
+          <span id=\"userBadge\" style=\"color:var(--text-dim); font-size:.9rem;\" data-testid=\"user-badge\"></span>
+          <button class=\"btn btn-ghost\" id=\"logoutBtn\" data-testid=\"logout-btn\">
+            <i class=\"fa-solid fa-right-from-bracket\"></i> Keluar
+          </button>
+        </div>
+      </header>
 
-    <!-- Auth Guard -->
-    <script>
-        if (localStorage.getItem('isLoggedIn') !== 'true') {
-            window.location.href = 'login.html';
-        }
-    </script>
+      <!-- Hero welcome -->
+      <section class=\"dash-hero reveal visible\" data-testid=\"dash-welcome\">
+        <span class=\"eyebrow\">Dashboard Pemain</span>
+        <h1>Halo, <span class=\"stroke\" id=\"welcomeName\">Gamer</span> 👾</h1>
+        <p>Siap lanjut grind FC 26? Ambil akses Amazon Luna dan mulai main tanpa download.</p>
 
-    <div class="flex">
-        <!-- Sidebar -->
-        <div class="w-64 border-r border-white/5 h-screen fixed hidden md:block bg-black">
-            <div class="p-8">
-                <h1 class="text-xl font-black">ALEX CLOUD</h1>
-            </div>
-            <nav class="px-4 space-y-2">
-                <a href="#" class="flex items-center gap-4 px-4 py-3 bg-white/10 rounded-xl text-white font-semibold">
-                    <i class="fas fa-home"></i> Home
-                </a>
-                <a href="#tutorial" class="flex items-center gap-4 px-4 py-3 text-gray-500 hover:bg-white/5 rounded-xl transition">
-                    <i class="fas fa-book"></i> Tutorial
-                </a>
-                <a href="#" onclick="logout()" class="flex items-center gap-4 px-4 py-3 text-red-500 hover:bg-red-500/5 rounded-xl transition mt-20">
-                    <i class="fas fa-sign-out-alt"></i> Logout
-                </a>
-            </nav>
+        <div class=\"dash-actions\">
+          <a href=\"https://luna.amazon.com\" target=\"_blank\" rel=\"noopener\" class=\"btn btn-primary\" data-testid=\"play-now-btn\">
+            <i class=\"fa-solid fa-play\"></i> Mulai Main
+          </a>
+          <a href=\"#tutorial\" class=\"btn btn-outline\" data-testid=\"tutorial-btn\">
+            <i class=\"fa-solid fa-book-open\"></i> Tutorial
+          </a>
+          <a href=\"index.html#pricing\" class=\"btn btn-ghost\" data-testid=\"upgrade-btn\">
+            <i class=\"fa-solid fa-arrow-up-right-from-square\"></i> Upgrade Paket
+          </a>
+        </div>
+      </section>
+
+      <!-- Info cards -->
+      <section class=\"dash-grid\" style=\"margin-bottom:30px;\">
+        <div class=\"dash-card reveal visible\" data-testid=\"card-status\">
+          <h4>Status Akun</h4>
+          <div class=\"val\">Aktif</div>
+          <div class=\"sub\">Akun Anda dalam kondisi baik.</div>
+        </div>
+        <div class=\"dash-card reveal visible\" data-testid=\"card-plan\">
+          <h4>Paket Saat Ini</h4>
+          <div class=\"val\" id=\"planVal\">—</div>
+          <div class=\"sub\">Klik Upgrade untuk memilih paket.</div>
+        </div>
+        <div class=\"dash-card reveal visible\" data-testid=\"card-joined\">
+          <h4>Bergabung Sejak</h4>
+          <div class=\"val\" id=\"joinedVal\" style=\"font-size:1.2rem;\">—</div>
+          <div class=\"sub\">Terima kasih sudah percaya kepada kami.</div>
+        </div>
+      </section>
+
+      <!-- Tutorial section -->
+      <section id=\"tutorial\">
+        <div class=\"section-head reveal visible\" style=\"margin-bottom:30px;\">
+          <span class=\"eyebrow\">Tutorial</span>
+          <h2>Cara Main <span class=\"stroke\">FC 25 / FC 26</span></h2>
         </div>
 
-        <!-- Main Content -->
-        <main class="flex-1 md:ml-64 p-8">
-            <header class="flex justify-between items-center mb-12">
-                <div>
-                    <h2 class="text-3xl font-bold">Welcome Back, <span id="userDisplay" class="text-gray-400">Gamer</span>!</h2>
-                    <p class="text-gray-500">Status Akun: <span class="text-green-500 font-bold">Aktif (Premium)</span></p>
-                </div>
-                <div class="w-12 h-12 bg-white rounded-full flex items-center justify-center text-black font-bold">
-                    A
-                </div>
-            </header>
-
-            <!-- Quick Actions -->
-            <div class="grid grid-cols-1 md:grid-cols-2 gap-6 mb-12">
-                <div class="bg-white text-black p-8 rounded-[32px] flex flex-col justify-between">
-                    <h3 class="text-2xl font-bold mb-4">Siap Bermain?</h3>
-                    <p class="mb-8 opacity-80">Klik tombol di bawah untuk langsung menuju portal Amazon Luna dan mainkan FC 25.</p>
-                    <a href="https://luna.amazon.com" target="_blank" class="w-fit px-8 py-4 bg-black text-white rounded-2xl font-bold">Mulai Main Sekarang <i class="fas fa-external-link-alt ml-2"></i></a>
-                </div>
-                <div class="bg-white/5 border border-white/10 p-8 rounded-[32px]">
-                    <h3 class="text-2xl font-bold mb-4">Tutorial Singkat</h3>
-                    <ul class="space-y-3 text-gray-400 text-sm">
-                        <li>1. Buka Amazon Luna via Browser Chrome</li>
-                        <li>2. Masukkan akun yang diberikan admin</li>
-                        <li>3. Pilih game "FC 25"</li>
-                        <li>4. Hubungkan Controller atau gunakan Keyboard</li>
-                    </ul>
-                </div>
-            </div>
-
-            <!-- Tutorial Section -->
-            <section id="tutorial" class="bg-white/5 border border-white/10 rounded-[40px] p-10">
-                <h3 class="text-2xl font-bold mb-6 underline">Cara Setting & Save Progress</h3>
-                <div class="space-y-8">
-                    <div class="flex gap-6">
-                        <div class="text-3xl font-black opacity-20">01</div>
-                        <div>
-                            <h4 class="font-bold mb-2">Login Amazon Luna</h4>
-                            <p class="text-gray-500 leading-relaxed">Gunakan email dan password yang Anda beli dari WhatsApp kami. Pastikan tidak mengganti password agar garansi tidak hangus.</p>
-                        </div>
-                    </div>
-                    <div class="flex gap-6">
-                        <div class="text-3xl font-black opacity-20">02</div>
-                        <div>
-                            <h4 class="font-bold mb-2">Save Progress Game</h4>
-                            <p class="text-gray-500 leading-relaxed">Game seperti FC 25 akan otomatis menyimpan progress ke Cloud Amazon Luna. Anda bisa melanjutkan di device manapun (HP/PC) asalkan akunnya sama.</p>
-                        </div>
-                    </div>
-                </div>
-            </section>
-        </main>
+        <div class=\"steps\">
+          <div class=\"step reveal visible\">
+            <span class=\"step-num\">01</span>
+            <h3>Login Amazon Luna</h3>
+            <p>Buka <b>luna.amazon.com</b> di Chrome. Masukkan email & password yang admin kirim lewat WhatsApp setelah pembayaran.</p>
+          </div>
+          <div class=\"step reveal visible\">
+            <span class=\"step-num\">02</span>
+            <h3>Pilih Game</h3>
+            <p>Cari <b>EA Sports FC 25</b> atau <b>FC 26</b> di library. Klik <b>Play</b> — game langsung stream ke browser Anda dalam hitungan detik.</p>
+          </div>
+          <div class=\"step reveal visible\">
+            <span class=\"step-num\">03</span>
+            <h3>Save Progress</h3>
+            <p>Progress otomatis tersimpan di cloud Amazon. Anda bisa keluar kapan saja dan lanjut di HP / PC lain.</p>
+          </div>
+          <div class=\"step reveal visible\">
+            <span class=\"step-num\">04</span>
+            <h3>Gunakan Controller</h3>
+            <p>Pakai gamepad bluetooth (Xbox / PS4 / PS5 / generic). Untuk HP, dukungan touch controller juga tersedia.</p>
+          </div>
+          <div class=\"step reveal visible\">
+            <span class=\"step-num\">05</span>
+            <h3>Pastikan Internet Stabil</h3>
+            <p>Minimal 10 Mbps untuk 1080p 60fps. WiFi 5GHz atau kabel ethernet sangat disarankan untuk FC 26.</p>
+          </div>
+          <div class=\"step reveal visible\">
+            <span class=\"step-num\">06</span>
+            <h3>Butuh Bantuan?</h3>
+            <p>Hubungi admin via WhatsApp. Tim kami siap bantu troubleshooting 24/7.</p>
+          </div>
+        </div>
+      </section>
     </div>
+  </div>
 
-    <script>
-        // Display email from storage
-        document.getElementById('userDisplay').innerText = localStorage.getItem('userEmail') || 'User';
+  <script src=\"script.js\"></script>
+  <script>
+    /* ==== Guard route — must be logged in ==== */
+    (function guard() {
+      const sess = localStorage.getItem('alex_session');
+      if (!sess) {
+        window.location.href = 'login.html';
+        return;
+      }
+      try {
+        const { email } = JSON.parse(sess);
+        const users = JSON.parse(localStorage.getItem('alex_users') || '{}');
+        const user = users[email] || { createdAt: new Date().toISOString() };
 
-        function logout() {
-            localStorage.clear();
-            window.location.href = 'login.html';
-        }
-    </script>
+        const name = email.split('@')[0];
+        document.getElementById('welcomeName').textContent = name;
+        document.getElementById('userBadge').textContent = email;
+
+        const joined = new Date(user.createdAt);
+        document.getElementById('joinedVal').textContent = joined.toLocaleDateString('id-ID', { year: 'numeric', month: 'long', day: 'numeric' });
+
+        const plan = user.plan || 'Belum Ada Paket';
+        document.getElementById('planVal').textContent = plan;
+      } catch (e) {
+        localStorage.removeItem('alex_session');
+        window.location.href = 'login.html';
+      }
+    })();
+
+    document.getElementById('logoutBtn').addEventListener('click', () => {
+      localStorage.removeItem('alex_session');
+      window.location.href = 'index.html';
+    });
+  </script>
 </body>
 </html>
+"
